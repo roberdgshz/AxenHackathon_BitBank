@@ -1,20 +1,18 @@
-# Usar imagen base de Python
-FROM python:3.10-slim
+# Usa una imagen oficial de Python como base
+FROM python:3.10
 
-# Establecer directorio de trabajo
+# Establece el directorio de trabajo en el contenedor
 WORKDIR /app
 
-# Copiar los archivos requeridos
-COPY requirements.txt requirements.txt
-
-# Instalar dependencias
+# Copia los archivos de requerimientos y los instala
+COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copiar todo el proyecto
-COPY . .
+# Copia el resto del proyecto
+COPY . /app/
 
-# Exponer el puerto
+# Expone el puerto 8000
 EXPOSE 8000
 
-# Comando para iniciar el servidor
+# Comando por defecto
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
