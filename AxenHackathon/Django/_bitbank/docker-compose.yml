@@ -1,3 +1,5 @@
+version: '3.9'
+
 services:
   web:
     build: .
@@ -8,15 +10,22 @@ services:
       - "8000:8000"
     depends_on:
       - db
+    environment:
+      - POSTGRES_NAME=bitbankdb
+      - POSTGRES_USER=adminrober
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_HOST=db
 
   db:
-    image: postgres:13
-    environment:
-      #POSTGRES_USER: <Usuario>
-      #POSTGRES_PASSWORD: <Contraseña>
-      #POSTGRES_DB: <Base de datos>
+    image: postgres:15
+    ports:
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=bitbankdb
+      - POSTGRES_USER=adminrober
+      - POSTGRES_PASSWORD=123
 
 volumes:
   postgres_data:
