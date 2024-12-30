@@ -24,7 +24,7 @@ class Wallet(models.Model):
         unique=True
     )
     WalletCoinQuantity = models.BigIntegerField()
-    WalletBalance       = models.BigIntegerField()
+    WalletBalance      = models.BigIntegerField()
 
     def __str__(self):
         return f"Wallet {self.WalletID} of {self.WalletAccountsID}"
