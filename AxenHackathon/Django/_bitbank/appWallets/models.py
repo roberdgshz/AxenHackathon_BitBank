@@ -1,5 +1,5 @@
 from django.db import models
-
+from appAccounts.models import Account
 
 # Create your models here.
 class Coin(models.Model):
@@ -14,7 +14,10 @@ class Coin(models.Model):
     
 class Wallet(models.Model):
     WalletID         = models.BigAutoField(primary_key=True)
-    WalletAccountsID = models.BigIntegerField() #It remains to make it foreign key
+    WalletAccountsID = models.OneToOneField(
+        Account,
+        on_delete=models.CASCADE,
+    )
     WalletCoinsID    = models.OneToOneField(
         Coin,
         on_delete=models.CASCADE,
