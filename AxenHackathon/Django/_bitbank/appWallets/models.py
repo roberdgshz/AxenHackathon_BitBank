@@ -14,14 +14,13 @@ class Coin(models.Model):
     
 class Wallet(models.Model):
     WalletID         = models.BigAutoField(primary_key=True)
-    WalletAccountsID = models.OneToOneField(
+    WalletAccountsID = models.ForeignKey(
         Account,
         on_delete=models.CASCADE,
     )
-    WalletCoinsID    = models.OneToOneField(
+    WalletCoinsID    = models.ForeignKey(
         Coin,
         on_delete=models.CASCADE,
-        unique=True
     )
     WalletCoinQuantity = models.BigIntegerField()
     WalletBalance      = models.BigIntegerField()

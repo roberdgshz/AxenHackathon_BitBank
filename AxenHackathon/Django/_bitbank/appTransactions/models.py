@@ -6,12 +6,12 @@ class Transaction(models.Model):
     TransactionID          = models.BigAutoField(primary_key=True)
     TransactionAmount      = models.BigIntegerField()
     TransactionDate        = models.DateTimeField()
-    TransactionReceiver    = models.OneToOneField(
+    TransactionReceiver    = models.ForeignKey(
         Account,
         on_delete=models.CASCADE,
         related_name="receiver"
     )
-    TransactionTransmitter = models.OneToOneField(
+    TransactionTransmitter = models.ForeignKey(
         Account,
         on_delete=models.CASCADE,
         related_name="transmitter"

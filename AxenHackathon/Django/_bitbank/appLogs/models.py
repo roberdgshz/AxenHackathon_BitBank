@@ -4,7 +4,7 @@ from appAccounts.models import Account
 # Create your models here.
 class Auditlog(models.Model):
     AuditlogID      = models.BigAutoField(primary_key=True)
-    AuditlogAccount = models.OneToOneField(
+    AuditlogAccount = models.ForeignKey(
         Account,
         on_delete=models.CASCADE
     )
