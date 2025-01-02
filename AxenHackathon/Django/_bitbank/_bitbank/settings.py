@@ -81,16 +81,11 @@ WSGI_APPLICATION = '_bitbank.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-
+import dj_database_url # type: ignore
 DATABASES = {
-'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_NAME', 'bitbankdb'),
-        'USER': os.getenv('POSTGRES_USER', 'adminrober'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', '123'),
-        'HOST': os.getenv('POSTGRES_HOST', 'db'),
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(
+        default='postgres://adminrober:123@db:5432/bitbankdb'
+    )
 }
 
 
