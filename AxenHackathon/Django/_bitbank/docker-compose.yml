@@ -2,30 +2,45 @@
 
 services:
   web:
-    build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    image: python:3.11-slim
+    container_name: django_bitbank
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: >
+      sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/app
     ports:
       - "8000:8000"
+    environment:
+      DJANGO_SETTINGS_MODULE: _bitbank.settings
+      DATABASE_URL: postgres://adminrober:123@db:5432/bitbankdb
     depends_on:
       - db
-    environment:
-      - POSTGRES_NAME=bitbankdb
-      - POSTGRES_USER=adminrober
-      - POSTGRES_PASSWORD=123
-      - POSTGRES_HOST=db
 
   db:
-    image: postgres:15
+    image: postgres:16
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: adminrober
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: bitbankdb
     ports:
-      - "5433:5432"
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
     environment:
-      - POSTGRES_DB=bitbankdb
-      - POSTGRES_USER=adminrober
-      - POSTGRES_PASSWORD=123
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5050:80"
 
 volumes:
   postgres_data:
+
