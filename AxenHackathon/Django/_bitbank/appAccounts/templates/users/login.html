@@ -1,5 +1,6 @@
 {% extends 'users/base.html' %}
 
+{% load socialaccount %}
 
 {% block content %}
 <a href="{% url 'login' %}">Login</a> | <a href="{% url 'register' %}">Register</a>
@@ -7,12 +8,27 @@
 
 <form method="post">
     {% csrf_token %}
-    <label for="username">Username:</label>
-    <input type="text" name="username", required><br/>
+    <label for="email">Email:</label>
+    <input type="text" name="email", required><br/>
     <label for="password">Password:</label>
     <input type="password" name="password", required><br/>
     <button type="sumbit">Login</button>
+
+    <br/>
+    <a href="{% provider_login_url 'google' %}" class="field google">
+        <span>Sing up with Google</span>
+    </a>
+    <br/>
+
+    <br/>
+
+    <!-- Botón de GitHub -->
+    <a href="{% provider_login_url 'github' %}" class="field github">
+        <span>Sign up with GitHub</span>
+    </a>
+    <br/>
     <a href="{% url 'register' %}">I don't have an account</a>
+    <a href="{% url 'password_reset' %}">Forgot password?</a>
 </form>
 {% endblock content %}
     
