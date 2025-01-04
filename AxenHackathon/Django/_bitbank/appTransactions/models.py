@@ -18,4 +18,4 @@ class Transaction(models.Model):
     )
 
     def __str__(self):
-        return f"{self.TransactionTransmitter} to {self.TransactionReceiver}, {self.TransactionDate}"
+        return f"{self.TransactionTransmitter} to {self.TransactionReceiver}, Amount: {self.TransactionAmount}. {self.TransactionDate}"

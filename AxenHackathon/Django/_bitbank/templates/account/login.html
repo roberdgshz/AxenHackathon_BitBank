@@ -1,0 +1,9 @@
+{% load socialaccount %}
+<h2>Iniciar sesión</h2>
+<form method="post" action="{% url 'account_login' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Iniciar sesión</button>
+</form>
+<a href="{% provider_login_url 'google' %}">Iniciar sesión con Google</a>
+<a href="{% provider_login_url 'github' %}">Iniciar sesión con GitHub</a>
