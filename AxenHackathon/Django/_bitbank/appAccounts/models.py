@@ -10,7 +10,7 @@ class Account(models.Model):
 
     def __str__(self):
         return self.AccountUsername
-    
+
 class ProfileAccount(models.Model):
     ProfileID          = models.BigAutoField(primary_key=True)
     ProfileName        = models.CharField(max_length=255)
