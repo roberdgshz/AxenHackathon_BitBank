@@ -3,34 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manual Username Validation</title>
+    <title>Redirect</title>
+    <script>
+
+    </script>
 </head>
-<body>
-    <form method="post" action="{% url 'validate_username' %}">
-        {% csrf_token %}
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <button id="button" type="submit">Validate Username</button>
-    </form>
-    {% if error %}
-        <p style="color: red;">{{ error }}</p>
-    {% endif %}
+<body> 
+    {{ request.user.username }}    
 </body>
 </html>
-
-<script>
-    var username = "user3";//"{{ request.user.username }}";
-    document.getElementById('username').value = username;
-    setTimeout(function() {
-        document.getElementById('button').click();
-    }, 5000);
-    // Redirige después de 5 segundos
-    setTimeout(() => {
-        var message = "{{ error }}"
-        if (message == "Username is available!") { 
-            window.location.href = "{% url 'base' %}";
-        } else {
-            window.location.href = "{% url 'completation' %}";
-        }
-    }, 5000); // 5000 milisegundos = 5 segundos
-</script>
