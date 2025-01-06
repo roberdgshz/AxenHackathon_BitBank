@@ -1,0 +1,37 @@
+{% extends 'users/base.html' %}
+    
+{% load static %}
+
+
+    {% block css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/appAccounts/styles/home.css' %}">
+    {% endblock %}
+
+{% block content %}
+    <header>
+        <nav>
+            <ul class="left">
+                <li><a href="{% url 'home' %}">BitBank</a></li>
+                <li><a href="#">Market</a></li>
+                <li><a href="#">-----</a></li>
+                <li><a href="#">-----</a></li>
+            </ul>
+            <ul class="right">
+                {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'account' %}">{{ request.user.AccountUsername }}</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'register' %}">Register</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Welcome to BitBank</h1>
+        <p>Your trusted financial partner.</p>
+    </section>
+{% endblock content %}
+
+    
