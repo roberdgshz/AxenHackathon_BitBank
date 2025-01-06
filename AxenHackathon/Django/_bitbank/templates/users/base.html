@@ -1,0 +1,67 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'styles/appAccounts/img/icon.webp' %}">
+    <link rel="stylesheet" href="{% static 'styles/appAccounts/styles/base.css' %}">
+
+    {% block css %}
+    
+    {% endblock %}
+
+    <title>BitBank</title>
+</head>
+<body>
+    {% block content %}
+
+    {% endblock content %}
+
+    <footer>
+        <div class="footer-section">
+            <h3>Community</h3>
+            <ul>
+                <li><a href="#">Discord</a></li>
+                <li><a href="#">Telegram</a></li>
+                <li><a href="#">TikTok</a></li>
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">YouTube</a></li>
+                <li><a href="#">Twitter</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>About Us</h3>
+            <ul>
+                <li><a href="#">About</a></li>
+                <li><a href="#">-----</a></li>
+                <li><a href="#">-----</a></li>
+                <li><a href="#">-----</a></li>
+                <li><a href="#">-----</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Service</h3>
+            <ul>
+                <li><a href="#">-----</a></li>
+                <li><a href="#">-----</a></li>
+                <li><a href="#">-----</a></li>
+                <li><a href="#">-----</a></li>
+                <li><a href="#">-----</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Support</h3>
+            <ul>
+                <li><a href="#">Chat</a></li>
+                <li><a href="#">Support Center</a></li>
+                <li><a href="#">-----</a></li>
+                <li><a href="#">-----</a></li>
+            </ul>
+        </div>
+    </footer>
+    
+</body>
+</html>
+

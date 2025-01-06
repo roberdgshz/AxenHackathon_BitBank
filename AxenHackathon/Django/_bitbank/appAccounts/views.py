@@ -34,3 +34,6 @@ def user_logout(request):
 
 def user_home(request):
     return render(request, 'users/home.html')
+
+def account(request):
+    return render(request, 'users/account.html')

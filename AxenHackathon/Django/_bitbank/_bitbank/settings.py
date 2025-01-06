@@ -123,11 +123,15 @@ WSGI_APPLICATION = '_bitbank.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-import dj_database_url # type: ignore
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgres://adminrober:123@db:5432/bitbankdb'
-    )
+'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'bitbankdb',
+        'USER': 'eduar',
+        'PASSWORD': 'brdnedu36', 
+        'HOST': 'postgres_db',
+        'PORT': '5432',
+    }
 }
 
 
@@ -165,7 +169,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
