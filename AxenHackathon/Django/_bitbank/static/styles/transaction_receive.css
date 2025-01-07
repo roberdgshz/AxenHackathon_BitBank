@@ -1,0 +1,94 @@
+.transaction-receive-container {
+    font-family: Arial, sans-serif;
+    margin: 2rem auto;
+    max-width: 800px;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+.transaction-receive-container h1 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.transaction-receive-container p {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #7f8c8d;
+}
+
+.receive-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+label {
+    font-size: 1rem;
+    color: #2c3e50;
+}
+
+input, select {
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #ffffff;
+    width: 100%;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #2980b9;
+    background-color: #f3f7fb;
+}
+
+.submit-button {
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #2980b9;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 2rem;
+    width: 100%;
+}
+
+.submit-button:hover {
+    background-color: #1e6f9f;
+    transform: scale(1.05);
+}
+
+.submit-button:active {
+    background-color: #145a7b;
+    transform: scale(1);
+}
+
+@media (max-width: 600px) {
+    .transaction-receive-container {
+        padding: 1rem;
+    }
+
+    .transaction-receive-container h1 {
+        font-size: 2rem;
+    }
+
+    .transaction-receive-container p {
+        font-size: 1rem;
+    }
+}

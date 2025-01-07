@@ -19,12 +19,13 @@
         <nav>
             <ul class="left">
                 <li><a href="{% url 'home' %}">BitBank</a></li>
-                <li><a href="#">Market</a></li>
-                <li><a href="#">Transfers</a></li>
-                <li><a href="#">About</a></li>
+                <li><a href="{% url 'coin_market' %}">Market</a></li>
+                <li><a href="{% url 'transaction_menu' %}">Transfers</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
             </ul>
             <ul class="right">
                 {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'notification_list' %}">Notifications</a></li>
                     <li><a href="{% url 'account' %}">{{ request.user.username }}</a></li>
                     <li><a href="{% url 'account_logout' %}">Logout</a></li>
                 {% else %}
@@ -55,7 +56,7 @@
             <h3>About Us</h3>
             <ul>
                 <li><a href="#">About</a></li>
-                <li><a href="#">Legal</a></li>
+                <li><a href="{% url 'legal' %}">Legal</a></li>
                 <li><a href="#">Terms</a></li>
                 <li><a href="#">Conditions</a></li>
                 <li><a href="#">Work with us</a></li>

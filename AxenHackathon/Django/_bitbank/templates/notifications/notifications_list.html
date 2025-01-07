@@ -6,6 +6,41 @@
     <title>Bitbank - Notifications List</title>
 </head>
 <body>
-    <h1>Notifications_list placeholder</h1>
+    {% extends 'base.html' %}
+    {% load static %}
+    {% block css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/notification.css' %}">
+    {% endblock %}
+    {% block content %}
+        <div class="notification-container">
+            <h1>Notifications</h1>
+            <p>Here are your latest notifications related to your account and transactions.</p>
+            
+            <div class="notification-list">
+                <div class="notification-item">
+                    <span class="notification-date">2025-01-07</span>
+                    <div class="notification-message">
+                        <strong>Security Alert:</strong> A login attempt was made from an unrecognized device.
+                    </div>
+                </div>
+                
+                <div class="notification-item">
+                    <span class="notification-date">2025-01-06</span>
+                    <div class="notification-message">
+                        <strong>Transaction Success:</strong> Your BTC transfer to address 1A2B3C was completed successfully.
+                    </div>
+                </div>
+                
+                <div class="notification-item">
+                    <span class="notification-date">2025-01-05</span>
+                    <div class="notification-message">
+                        <strong>Account Update:</strong> Your KYC verification has been successfully completed.
+                    </div>
+                </div>
+
+                <!-- Add more notification items here -->
+            </div>
+        </div>
+    {% endblock %}
 </body>
 </html>

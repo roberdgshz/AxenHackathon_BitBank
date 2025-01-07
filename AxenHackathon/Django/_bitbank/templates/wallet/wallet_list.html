@@ -6,6 +6,43 @@
     <title>Bitbank - Wallet</title>
 </head>
 <body>
-    <h1>Wallet placeholder</h1>
+    {% extends 'base.html' %}
+    {% load static %}
+    {% block css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/wallet_list.css' %}">
+    {% endblock %}
+    {% block content %}
+        <div class="wallet-container">
+            <h1>Your Wallet</h1>
+            <p>Here is the list of available currencies in your wallet:</p>
+        
+            <div class="wallet-list">
+                <div class="wallet-item">
+                    <span class="coin-name">USD - US Dollar</span>
+                    <span class="coin-amount">Amount: $1,500.00</span>
+                </div>
+                <div class="wallet-item">
+                    <span class="coin-name">EUR - Euro</span>
+                    <span class="coin-amount">Amount: €1,200.50</span>
+                </div>
+                <div class="wallet-item">
+                    <span class="coin-name">MXN - Mexican Peso</span>
+                    <span class="coin-amount">Amount: $30,000.00</span>
+                </div>
+                <div class="wallet-item">
+                    <span class="coin-name">BTC - Bitcoin</span>
+                    <span class="coin-amount">Amount: ₿ 0.25</span>
+                </div>
+                <div class="wallet-item">
+                    <span class="coin-name">BNB - Binance Coin</span>
+                    <span class="coin-amount">Amount: BNB 1.5</span>
+                </div>
+                <div class="wallet-item">
+                    <span class="coin-name">ETH - Ethereum</span>
+                    <span class="coin-amount">Amount: Ξ 0.75</span>
+                </div>
+            </div>
+        </div>
+    {% endblock %}    
 </body>
 </html>

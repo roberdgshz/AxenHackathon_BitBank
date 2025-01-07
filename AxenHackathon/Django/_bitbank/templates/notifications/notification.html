@@ -6,6 +6,13 @@
     <title>Bitbank - Notification</title>
 </head>
 <body>
-    <h1>Notification placeholder</h1>
+    {% extends 'base.html' %}
+    {% load static %}
+    {% block css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
+    {% endblock %}
+    {% block content %}
+        <h1>Notification placeholder</h1>
+    {% endblock %}
 </body>
 </html>

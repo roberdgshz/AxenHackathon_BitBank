@@ -9,6 +9,13 @@
     </script>
 </head>
 <body> 
-    {{ request.user.username }}    
+    {% extends 'base.html' %}
+    {% load static %}
+    {% block css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
+    {% endblock %}
+    {% block content %}
+        {{ request.user.username }}
+    {% endblock %}    
 </body>
 </html>

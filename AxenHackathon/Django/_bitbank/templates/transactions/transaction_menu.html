@@ -6,6 +6,23 @@
     <title>Bitbank - Transaction Menu</title>
 </head>
 <body>
-    <h1>Transaction Menu placeholder</h1>
+    {% extends 'base.html' %}
+    {% load static %}
+    {% block css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/transaction.css' %}">
+    {% endblock %}
+    {% block content %}
+        <div class="transaction-menu-container">
+            <h1>Transaction Menu</h1>
+            <p>Choose an option to manage your transactions:</p>
+        
+            <div class="button-group">
+                <a href="{% url 'transaction_deposit' %}" class="transaction-button">Deposit</a>
+                <a href="{% url 'transaction_receive' %}" class="transaction-button">Receive</a>
+                <a href="{% url 'transaction_history' %}" class="transaction-button">Transaction History</a>
+            </div>
+        </div>
+    {% endblock %}
+    
 </body>
 </html>

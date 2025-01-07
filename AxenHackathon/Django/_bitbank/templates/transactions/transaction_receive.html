@@ -6,6 +6,42 @@
     <title>Bitbank - Receive</title>
 </head>
 <body>
-    <h1>Transaction receive placeholder</h1>
+    {% extends 'base.html' %}
+    {% load static %}
+    {% block css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/transaction_receive.css' %}">
+    {% endblock %}
+    {% block content %}
+        <div class="transaction-receive-container">
+            <h1>Receive Transaction</h1>
+            <p>Fill in the details below to receive a transfer.</p>
+        
+            <form method="POST" class="receive-form">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input type="number" id="amount" name="amount" placeholder="Enter the amount you are receiving" required>
+                </div>
+        
+                <div class="form-group">
+                    <label for="currency">Currency Type</label>
+                    <select id="currency" name="currency" required>
+                        <option value="USD">USD - US Dollar</option>
+                        <option value="EUR">EUR - Euro</option>
+                        <option value="BTC">BTC - Bitcoin</option>
+                        <option value="ETH">ETH - Ethereum</option>
+                    </select>
+                </div>
+        
+                <div class="form-group">
+                    <label for="sender">Sender</label>
+                    <input type="text" id="sender" name="sender" placeholder="Enter sender's name or wallet address" required>
+                </div>
+        
+                <button type="submit" class="submit-button">Submit Receive</button>
+            </form>
+        </div>
+    {% endblock %}    
 </body>
 </html>

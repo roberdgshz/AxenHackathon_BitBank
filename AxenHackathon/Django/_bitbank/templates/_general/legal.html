@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitbank - Legal</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% load static %}
+    {% block css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/legal.css' %}">
+    {% endblock %}
+    {% block content %}
+        <div class="legal-container">
+            <h1>Legal Information</h1>
+            <p>
+                Welcome to the legal section of <strong>CryptoBank</strong>. Transparency and compliance are at the heart of our operations. Below you will find the essential legal information governing our services, user responsibilities, and regulatory commitments.
+            </p>
+
+            <h2>Terms of Service</h2>
+            <p>
+                By using our platform, you agree to adhere to our Terms of Service, which outline your rights and responsibilities as a user. Please review them carefully to understand your obligations and the scope of services we provide.
+            </p>
+
+            <h2>Privacy Policy</h2>
+            <p>
+                Your privacy is important to us. Our Privacy Policy details how we collect, use, and protect your personal data. We comply with global data protection regulations to ensure your information is secure.
+            </p>
+
+            <h2>Compliance with Regulations</h2>
+            <p>
+                CryptoBank operates in accordance with international financial laws and regulations, including Anti-Money Laundering (AML) and Know Your Customer (KYC) standards. Our commitment to compliance ensures a secure and trustworthy environment for all users.
+            </p>
+
+            <h2>Disclaimer</h2>
+            <p>
+                The information provided on this platform does not constitute financial or investment advice. CryptoBank is not responsible for losses incurred due to market fluctuations or user decisions. Please consult with a professional advisor for financial guidance.
+            </p>
+
+            <p>
+                For further details, please contact us at <a href="mailto:legal@cryptobank.com">legal@cryptobank.com</a>.
+            </p>
+        </div>
+    {% endblock %}
+</body>
+</html>

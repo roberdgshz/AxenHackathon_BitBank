@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitbank - About</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% load static %}
+    {% block css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/about.css' %}">
+    {% endblock %}
+    {% block content %}
+    <div class="about-container">
+        <h1>About Us</h1>
+        <p>
+            Welcome to <strong>CryptoBank</strong>, your trusted partner in the modern financial ecosystem. 
+            We specialize in facilitating seamless transactions with both cryptocurrencies and traditional 
+            national currencies. Our mission is to bridge the gap between decentralized digital assets 
+            and the global banking system, empowering users with flexibility, transparency, and security.
+        </p>
+        <h2>Our Vision</h2>
+        <p>
+            At CryptoBank, we envision a world where financial transactions are inclusive, 
+            efficient, and accessible to everyone. By combining cutting-edge blockchain technology 
+            with robust banking practices, we aim to create a sustainable and scalable platform 
+            that serves individuals and businesses alike.
+        </p>
+        <h2>Why Choose Us?</h2>
+        <ul>
+            <li><strong>Secure Transactions:</strong> State-of-the-art encryption ensures your funds and data are always protected.</li>
+            <li><strong>Global Reach:</strong> Transact in multiple currencies, including USD, EUR, BTC, and ETH, with ease.</li>
+            <li><strong>24/7 Support:</strong> Our dedicated team is here to assist you anytime, anywhere.</li>
+        </ul>
+    </div>
+    {% endblock %}    
+</body>
+</html>
