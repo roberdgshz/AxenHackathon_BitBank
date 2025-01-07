@@ -1,11 +1,86 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="shortcut icon" href="{% static 'styles/appAccounts/img/icon.webp' %}">
+    <link rel="stylesheet" href="{% static 'styles/base.css' %}">
+
+    {% block css %}
+    
+    {% endblock %}
+
+    <title>BitBank</title>
 </head>
 <body>
-    <h1>Bienvenido!</h1>
+    <header>
+        <nav>
+            <ul class="left">
+                <li><a href="{% url 'home' %}">BitBank</a></li>
+                <li><a href="#">Market</a></li>
+                <li><a href="#">Transfers</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+            <ul class="right">
+                {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'account' %}">{{ request.user.username }}</a></li>
+                    <li><a href="{% url 'account_logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'signup' %}">Register</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    {% block content %}
+
+    {% endblock content %}
+
+    <footer>
+        <div class="footer-section">
+            <h3>Social</h3>
+            <ul>
+                <li><a href="#">Discord</a></li>
+                <li><a href="#">Telegram</a></li>
+                <li><a href="#">TikTok</a></li>
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">YouTube</a></li>
+                <li><a href="#">X</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>About Us</h3>
+            <ul>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Legal</a></li>
+                <li><a href="#">Terms</a></li>
+                <li><a href="#">Conditions</a></li>
+                <li><a href="#">Work with us</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Service</h3>
+            <ul>
+                <li><a href="#">-----</a></li>
+                <li><a href="#">-----</a></li>
+                <li><a href="#">-----</a></li>
+                <li><a href="#">-----</a></li>
+                <li><a href="#">-----</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Support</h3>
+            <ul>
+                <li><a href="#">Chat</a></li>
+                <li><a href="#">Support Center</a></li>
+                <li><a href="#">-----</a></li>
+                <li><a href="#">-----</a></li>
+            </ul>
+        </div>
+    </footer>
+    
 </body>
 </html>

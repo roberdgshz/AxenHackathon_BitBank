@@ -1,9 +1,48 @@
-{% load socialaccount %}
-<h2>Iniciar sesión</h2>
-<form method="post" action="{% url 'account_login' %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Iniciar sesión</button>
-</form>
-<a href="{% provider_login_url 'google' %}">Iniciar sesión con Google</a>
-<a href="{% provider_login_url 'github' %}">Iniciar sesión con GitHub</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitbank - Login</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+    
+    {% load static %}
+    
+    {% block css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
+    {% endblock %}
+    {% load socialaccount %}
+
+    {% block content %}
+
+    <h1>Login</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <label for="email">Email:</label>
+        <input type="text" name="email" autocomplete="email" required>
+        <label for="password">Password:</label>
+        <input type="password" name="password" required>
+        <button type="submit">Login</button>
+
+        <a href="{% provider_login_url 'google' %}" class="field google">
+            <span>Sign up with Google</span>
+        </a>
+
+        <a href="{% provider_login_url 'github' %}" class="field github">
+            <span>Sign up with GitHub</span>
+        </a>
+
+        <p>
+            <a href="{% url 'signup' %}">I don't have an account</a>
+        </p>
+
+        <p>
+            <!-- agregar la recuperación de contraseñas -->
+        </p>
+    </form>
+    {% endblock content %}
+</body>
+</html>

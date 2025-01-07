@@ -6,9 +6,15 @@ from .models import Account
 class ViewCompletation(TemplateView):
     template_name = 'account/completation.html'
 
+class ViewAccount(TemplateView):
+    template_name = 'account/account.html'
+
+class ViewLogin(TemplateView):
+    template_name = 'account/login.html'
+
+class ViewSignup(TemplateView):
+    template_name = 'account/signup.html'
+
 def ViewRedirect(request):
     accounts = Account.objects.all()
     return render(request, 'account/username_accounts_verify.html', {'accounts': accounts})
-
-class ViewBase(TemplateView):
-    template_name = 'base.html'

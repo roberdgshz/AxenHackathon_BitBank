@@ -1,24 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bitbank - Signup</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bitbank - profile</title>
 </head>
 <body>
-    {% extends 'base.html' %}
+  {% extends 'base.html' %}
 
-{% load static %}
+    {% load static %}
 
-{% load socialaccount %}
+    {% block css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
+    {% endblock %}
 
-{% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
-{% endblock %}
-
-{% block content %}
-<h1>Register</h1>
-<form method="post">
+    {% block content %}
+<h1>Update information</h1>
+<form method="put">
     {% csrf_token %}
         <label for="id_email">Email:</label>
         <input type="email" name="email" maxlength="255" autofocus required id="id_email">
@@ -45,23 +43,9 @@
           <span class="helptext" id="id_password2_helptext">Enter the same password as before, for verification.</span>
         </p>
         
-        <button type="sumbit">Sign up</button>
-
-    <a href="{% provider_login_url 'google' %}" class="field google">
-        <span>Sign up with Google</span>
-    </a>
-
-    <a href="{% provider_login_url 'github' %}" class="field github">
-        <span>Sign up with GitHub</span>
-    </a>
-
-    <p>
-        <a href="{% url 'login' %}">Login</a>
-    </p>
+        <button type="sumbit">Update</button>
 </form>
+    
 {% endblock content %}
 </body>
 </html>
-    
-
-
