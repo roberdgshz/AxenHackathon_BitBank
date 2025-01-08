@@ -9,10 +9,21 @@
     {% extends 'base.html' %}
     {% load static %}
     {% block css %}
-        <link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/coin_info.css' %}">
     {% endblock %}
     {% block content %}
-        <h1>Coin Info placeholder</h1>
+        <div class="coin-info-container">
+            <a href="{% url 'coin_market' %}" class="back-link">← Back to Coin Market</a>
+
+            <div class="coin-header">
+                <img src="{{ coin.CoinImgPath.url }}" alt="{{ coin.CoinName }} icon" class="coin-icon">
+                <h1>{{ coin.CoinName }} ({{ coin.CoinKey }})</h1>
+            </div>
+
+            <div class="coin-details">
+                <p><strong>Current Value:</strong> {{ coin.CoinValue }}</p>
+            </div>
+        </div>
     {% endblock %}
 </body>
 </html>

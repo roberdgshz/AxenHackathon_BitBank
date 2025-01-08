@@ -15,33 +15,16 @@
         <div class="coin-market-container">
             <h1>Coin Market</h1>
             <p>Below are the available currencies for exchange:</p>
-
-            <div class="coin-list">
-                <div class="coin-item">
-                    <span class="coin-name">USD - US Dollar</span>
-                    <span class="coin-price">$1.00</span>
+            {% for coin in coins %}
+                <div class="coin-list">
+                    <a href="{% url 'coin_info' coin.CoinID %}">
+                        <div class="coin-item">
+                            <span class="coin-name">{{ coin.CoinKey }} {{ coin.CoinName }}</span>
+                            <span class="coin-price">{{ coin.CoinValue }}</span>
+                        </div>
+                    </a>
                 </div>
-                <div class="coin-item">
-                    <span class="coin-name">EUR - Euro</span>
-                    <span class="coin-price">€0.85</span>
-                </div>
-                <div class="coin-item">
-                    <span class="coin-name">MXN - Mexican Peso</span>
-                    <span class="coin-price">$18.50</span>
-                </div>
-                <div class="coin-item">
-                    <span class="coin-name">BTC - Bitcoin</span>
-                    <span class="coin-price">₿ 0.00025</span>
-                </div>
-                <div class="coin-item">
-                    <span class="coin-name">BNB - Binance Coin</span>
-                    <span class="coin-price">BNB 0.25</span>
-                </div>
-                <div class="coin-item">
-                    <span class="coin-name">ETH - Ethereum</span>
-                    <span class="coin-price">Ξ 0.015</span>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     {% endblock %}
 </body>

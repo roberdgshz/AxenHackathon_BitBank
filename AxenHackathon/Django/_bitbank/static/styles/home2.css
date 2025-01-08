@@ -97,3 +97,13 @@ footer a {
 footer a:hover {
     text-decoration: underline;
 }
+
+.resize {
+    width:10px;
+    height:10px;
+}
+
+.resize:hover {
+    height:90px;
+    width:90px;
+}

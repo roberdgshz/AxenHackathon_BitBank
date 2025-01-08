@@ -5,9 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="{% static 'styles/appAccounts/img/icon.webp' %}">
+    <link rel="shortcut icon" href="{% static 'static/imgs/home/bitbanklogo.webp' %}">
     <link rel="stylesheet" href="{% static 'styles/base.css' %}">
-
     {% block css %}
     
     {% endblock %}
@@ -25,6 +24,7 @@
             </ul>
             <ul class="right">
                 {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'wallet_list' %}">Wallet</a></li>
                     <li><a href="{% url 'notification_list' %}">Notifications</a></li>
                     <li><a href="{% url 'account' %}">{{ request.user.username }}</a></li>
                     <li><a href="{% url 'account_logout' %}">Logout</a></li>

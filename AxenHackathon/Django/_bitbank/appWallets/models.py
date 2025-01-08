@@ -6,7 +6,7 @@ class Coin(models.Model):
     CoinID      = models.BigAutoField(primary_key=True)
     CoinName    = models.CharField(max_length=100)
     CoinKey     = models.CharField(max_length=5)
-    CoinImgPath = models.CharField(max_length=255, unique=True, null=True, blank=True)
+    CoinImgPath = models.ImageField(upload_to='coins/', unique=True, null=True, blank=True)
     CoinValue   = models.BigIntegerField()
 
     def __str__(self):
