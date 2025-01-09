@@ -9,10 +9,37 @@
     {% extends 'base.html' %}
     {% load static %}
     {% block css %}
-        <link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/transaction_history.css' %}">
     {% endblock %}
     {% block content %}
-        <h1>Transaction history placeholder</h1>
+        <div class="transaction-history-container">
+            <h1>Transaction History</h1>
+
+            <table class="transaction-table">
+                <thead>
+                    <tr>
+                        <th>Coin</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Receiver</th>
+                        <th>Info</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaction in transactions %}
+                        <tr>
+                            <td>{{ transaction.TransactionCoin_id }}</td>
+                            <td>{{ transaction.TransactionAmount }}</td>
+                            <td>{{ transaction.TransactionDate }}</td>
+                            <td>{{ transaction.TransactionReceiver }}</td>
+                            <td><a href="{% url 'transaction_info' transaction.TransactionID %}">Info</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <a href="{% url 'transaction_menu' %}" class="back-link">← Back to Transactions</a>
+        </div>
     {% endblock %}
 </body>
 </html>

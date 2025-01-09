@@ -24,8 +24,8 @@
             </ul>
             <ul class="right">
                 {% if request.user.is_authenticated %}
-                    <li><a href="{% url 'wallet_list' %}">Wallet</a></li>
-                    <li><a href="{% url 'notification_list' %}">Notifications</a></li>
+                    <li><a href="{% url 'wallet_list' request.user.username %}">Wallet</a></li>
+                    <li><a href="{% url 'notification_list' request.user.username %}">Notifications</a></li>
                     <li><a href="{% url 'account' %}">{{ request.user.username }}</a></li>
                     <li><a href="{% url 'account_logout' %}">Logout</a></li>
                 {% else %}

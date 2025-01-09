@@ -9,10 +9,20 @@
     {% extends 'base.html' %}
     {% load static %}
     {% block css %}
-        <link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/wallet_coin.css' %}">
     {% endblock %}
     {% block content %}
-        <h1>Wallet Coin placeholder</h1>
+    <div class="wallet-coin-container">
+        <h1>Wallet Coin Details</h1>
+    
+        <div class="coin-details">
+            <p><strong>Coin ID:</strong> {{ wallet.WalletCoinsID_id }}</p>
+            <p><strong>Amount:</strong> {{ wallet.WalletCoinQuantity }}</p>
+            <p><strong>Value:</strong> {{ wallet.WalletBalance }}</p>
+        </div>
+    
+        <a href="{% url 'wallet_list' request.user.username %}" class="back-link">← Back to Wallet</a>
+    </div>
     {% endblock %}
 </body>
 </html>

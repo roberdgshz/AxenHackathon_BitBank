@@ -9,37 +9,25 @@
     {% extends 'base.html' %}
     {% load static %}
     {% block css %}
-        <link rel="stylesheet" type="text/css" href="{% static 'styles/notification.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/notification_list.css' %}">
     {% endblock %}
     {% block content %}
         <div class="notification-container">
             <h1>Notifications</h1>
-            <p>Here are your latest notifications related to your account and transactions.</p>
-            
-            <div class="notification-list">
-                <div class="notification-item">
-                    <span class="notification-date">2025-01-07</span>
-                    <div class="notification-message">
-                        <strong>Security Alert:</strong> A login attempt was made from an unrecognized device.
-                    </div>
+            <p>Here are your latest notifications related to your account.</p>
+            {% for log in logs %}
+                <div class="notification-list">
+                    <a href="{% url 'notification' log.AuditlogID %}">
+                        {% if log.AuditlogAccount_id == user.AccountID %}
+                            <div class="notification-item">
+                                <span class="notification-date">{{ log.AuditlogTime }}</span>
+                                <div class="notification-message">
+                                    <strong>Security Alert:</strong> {{ log.AuditlogDescription }}
+                                </div>
+                            </div>
+                        {% endif %}
                 </div>
-                
-                <div class="notification-item">
-                    <span class="notification-date">2025-01-06</span>
-                    <div class="notification-message">
-                        <strong>Transaction Success:</strong> Your BTC transfer to address 1A2B3C was completed successfully.
-                    </div>
-                </div>
-                
-                <div class="notification-item">
-                    <span class="notification-date">2025-01-05</span>
-                    <div class="notification-message">
-                        <strong>Account Update:</strong> Your KYC verification has been successfully completed.
-                    </div>
-                </div>
-
-                <!-- Add more notification items here -->
-            </div>
+            {% endfor %}
         </div>
     {% endblock %}
 </body>

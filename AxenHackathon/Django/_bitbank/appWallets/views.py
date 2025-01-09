@@ -1,6 +1,6 @@
-from django.views.generic import TemplateView
 from django.shortcuts import render, get_object_or_404
-from .models import Coin
+from .models import Coin, Wallet
+from appAccounts.models import Account
 
 # Create your views here.
 def ViewWalletCoinInfo(request, CoinID):
@@ -11,8 +11,11 @@ def ViewWalletCoinMarket(request):
     monedas = Coin.objects.all()
     return render(request, 'wallet/coin_market.html', {'coins': monedas})
 
-class ViewWalletCoin(TemplateView):
-    template_name = 'wallet/wallet_coin.html'
+def ViewWalletList(request, AccountUsername):
+    user = get_object_or_404(Account, AccountUsername=AccountUsername)
+    wallets = Wallet.objects.all()
+    return render(request, 'wallet/wallet_list.html', {'user':user, 'wallets':wallets})
 
-class ViewWalletList(TemplateView):
-    template_name = 'wallet/wallet_list.html'
+def ViewWalletCoin(request, WalletID):
+    wallet = get_object_or_404(Wallet, WalletID=WalletID)
+    return render(request, 'wallet/wallet_coin.html', {'wallet':wallet})

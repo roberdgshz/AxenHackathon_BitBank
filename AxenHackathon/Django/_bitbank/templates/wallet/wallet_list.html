@@ -15,33 +15,24 @@
         <div class="wallet-container">
             <h1>Your Wallet</h1>
             <p>Here is the list of available currencies in your wallet:</p>
-        
-            <div class="wallet-list">
-                <div class="wallet-item">
-                    <span class="coin-name">USD - US Dollar</span>
-                    <span class="coin-amount">Amount: $1,500.00</span>
+            {% for wallet in wallets %}
+                <div class="coin-list">
+                    <a href="{% url 'wallet_coin' wallet.WalletID %}">
+                        {% if wallet.WalletAccountsID_id == user.AccountID %} 
+                            <div class="wallet-list">
+                                <div class="wallet-item">
+                                    <span class="coin-name"> Coin: {{ wallet.WalletCoinsID_id }}, Amount: {{ wallet.WalletCoinQuantity }}</span>
+                                    {% if wallet.WalletCoinsID_id == 2 %}
+                                        <span class="coin-amount">Price: {{ wallet.WalletBalance }} USD</span>
+                                    {% else %}
+                                        <span class="coin-amount">Price: {{ wallet.WalletBalance }} BTC</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </a>
                 </div>
-                <div class="wallet-item">
-                    <span class="coin-name">EUR - Euro</span>
-                    <span class="coin-amount">Amount: €1,200.50</span>
-                </div>
-                <div class="wallet-item">
-                    <span class="coin-name">MXN - Mexican Peso</span>
-                    <span class="coin-amount">Amount: $30,000.00</span>
-                </div>
-                <div class="wallet-item">
-                    <span class="coin-name">BTC - Bitcoin</span>
-                    <span class="coin-amount">Amount: ₿ 0.25</span>
-                </div>
-                <div class="wallet-item">
-                    <span class="coin-name">BNB - Binance Coin</span>
-                    <span class="coin-amount">Amount: BNB 1.5</span>
-                </div>
-                <div class="wallet-item">
-                    <span class="coin-name">ETH - Ethereum</span>
-                    <span class="coin-amount">Amount: Ξ 0.75</span>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     {% endblock %}    
 </body>
