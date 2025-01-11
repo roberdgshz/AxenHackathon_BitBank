@@ -4,23 +4,23 @@ from appWallets.models import Coin
 
 # Create your models here.
 class Transaction(models.Model):
-    TransactionID          = models.BigAutoField(primary_key=True)
-    TransactionAmount      = models.BigIntegerField()
-    TransactionCoin        = models.ForeignKey(
+    transactionid          = models.BigAutoField(primary_key=True)
+    transactionamount      = models.DecimalField(max_digits=100,decimal_places=50)
+    transactioncoin        = models.ForeignKey(
         Coin,
         on_delete=models.CASCADE
     )
-    TransactionDate        = models.DateTimeField()
-    TransactionReceiver    = models.ForeignKey(
+    transactiondate        = models.DateTimeField()
+    transactionreceiver    = models.ForeignKey(
         Account,
         on_delete=models.CASCADE,
         related_name="receiver"
     )
-    TransactionTransmitter = models.ForeignKey(
+    transactiontransmitter = models.ForeignKey(
         Account,
         on_delete=models.CASCADE,
         related_name="transmitter"
     )
 
     def __str__(self):
-        return f"{self.TransactionTransmitter} to {self.TransactionReceiver}, Amount: {self.TransactionAmount}. {self.TransactionDate}"
+        return f"{self.transactiontransmitter} to {self.transactionreceiver}, Amount: {self.transactionamount}. {self.transactiondate}"

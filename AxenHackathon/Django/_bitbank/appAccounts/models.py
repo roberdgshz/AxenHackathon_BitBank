@@ -9,19 +9,19 @@ class Account(models.Model):
     accountnip      = models.IntegerField()
 
     def __str__(self):
-        return self.AccountUsername
+        return self.accountusername
     
 
 class ProfileAccount(models.Model):
-    ProfileID          = models.BigAutoField(primary_key=True)
-    ProfileName        = models.CharField(max_length=255)
-    ProfileLastname    = models.CharField(max_length=255)
-    ProfileNumberphone = models.CharField(unique=True, max_length=15, blank=True, null=True)
-    ProfileAccountid   = models.OneToOneField(
+    profileid          = models.BigAutoField(primary_key=True)
+    profilename        = models.CharField(max_length=255)
+    profilelastname    = models.CharField(max_length=255)
+    profilenumberphone = models.CharField(unique=True, max_length=15, blank=True, null=True)
+    profileaccountid   = models.OneToOneField(
         Account,
         on_delete=models.CASCADE,
         unique=True    
     )
 
     def __str__(self):
-        return f"{self.ProfileName} {self.ProfileLastname}"
+        return f"{self.profilename} {self.profilelastname}"
