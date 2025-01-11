@@ -25,6 +25,7 @@ urlpatterns = [
     path('', ViewHome.as_view(), name="home"),
     path('about/', ViewAbout.as_view(), name="about"),
     path('legal/', ViewLegal.as_view(), name="legal"),
+    path('test/', ViewQuerys, name="query"),
     path('accounts/', include('allauth.urls')),
     path('account/', include('appAccounts.urls')),
     path('logs/', include('appLogs.urls')),
