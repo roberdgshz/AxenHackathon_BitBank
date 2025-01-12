@@ -17,15 +17,17 @@
             <p>Here are your latest notifications related to your account.</p>
             {% for log in logs %}
                 <div class="notification-list">
-                    <a href="{% url 'notification' log.AuditlogID %}">
-                        {% if log.AuditlogAccount_id == user.AccountID %}
-                            <div class="notification-item">
-                                <span class="notification-date">{{ log.AuditlogTime }}</span>
-                                <div class="notification-message">
-                                    <strong>Security Alert:</strong> {{ log.AuditlogDescription }}
-                                </div>
+                    <a href="{% url 'notification' log.id %}">
+                        <div class="notification-item">
+                            <span class="notification-date">{{ log.time }}</span>
+                            <div class="notification-message">
+                                {% if log.id == 1 %}
+                                    <strong>Security:</strong> {{ log.description }}
+                                {% else %}
+                                    <strong>Transaction:</strong> {{ log.description }}
+                                {% endif %}
                             </div>
-                        {% endif %}
+                        </div>
                 </div>
             {% endfor %}
         </div>

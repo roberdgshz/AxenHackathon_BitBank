@@ -7,10 +7,13 @@ class Coin(models.Model):
     coinname    = models.CharField(max_length=100)
     coinkey     = models.CharField(max_length=5)
     coinimgpath = models.ImageField(upload_to='coins/', unique=True, null=True, blank=True)
-    coinvalue   = models.BigIntegerField()
+    coinvalue   = models.DecimalField(max_digits=100,decimal_places=15)
+
+    class Meta:
+        db_table = "coin"
 
     def __str__(self):
-        return self.CoinName
+        return self.coinname
     
 class Wallet(models.Model):
     walletid         = models.BigAutoField(primary_key=True)
@@ -23,7 +26,10 @@ class Wallet(models.Model):
         on_delete=models.CASCADE,
     )
     walletcoinQuantity = models.BigIntegerField()
-    walletbalance      = models.BigIntegerField()
+    walletbalance      = models.DecimalField(max_digits=100,decimal_places=20)
+
+    class Meta:
+        db_table = "wallet"
 
     def __str__(self):
         return f"Wallet {self.walletid} of {self.walletaccountsid}"

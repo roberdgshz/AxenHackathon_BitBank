@@ -16,10 +16,12 @@
             <h1>Transaction Information</h1>
 
             <div class="transaction-details">
-                <p><strong>Coin:</strong> {{ transaction.TransactionCoin_id }}</p>
-                <p><strong>Amount:</strong> {{ transaction.TransactionAmount }}</p>
-                <p><strong>Date:</strong> {{ transaction.TransactionDate }}</p>
-                <p><strong>Receiver:</strong> {{ transaction.TransactionReceiver }}</p>
+                <p><strong>ID:</strong> {{ transaction.id }}</p>
+                <p><strong>Coin:</strong> {{ transaction.coinid }}</p>
+                <p><strong>Amount:</strong> {{ transaction.amount }}</p>
+                <p><strong>Date:</strong> {{ transaction.date }}</p>
+                <p><strong>Receiver:</strong> {{ transaction.receiver }}</p>
+                <p><strong>Transmitter:</strong> {{ transaction.transmitter }}</p>
             </div>
 
             <a href="{% url 'transaction_history' request.user.username %}" class="back-link">← Back to Transaction History</a>

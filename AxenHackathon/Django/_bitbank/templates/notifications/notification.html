@@ -16,8 +16,14 @@
             <h1>Notification Details</h1>
 
             <div class="notification-details">
-                <p><strong>Description:</strong> {{ log.AuditlogDescription }}</p>
-                <p><strong>Registered Time:</strong> {{ log.AuditlogTime }}</p>
+                <p><strong>ID:</strong> {{ log.id }}</p>
+                {% if log.id == 1 %}
+                    <p><strong>Type:</strong> Security</p>
+                {% elif log.id == 2 %}
+                    <p><strong>Type:</strong> Transaction</p>
+                {% endif %}
+                <p><strong>Description:</strong> {{ log.description }}</p>
+                <p><strong>Registered Time:</strong> {{ log.time }}</p>
             </div>
 
             <a href="{% url 'notification_list' request.user.username %}" class="back-link">← Back to Notifications</a>

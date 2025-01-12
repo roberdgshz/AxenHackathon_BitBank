@@ -8,6 +8,9 @@ class Account(models.Model):
     accountemail    = models.CharField(unique=True, max_length=255)
     accountnip      = models.IntegerField()
 
+    class Meta:
+        db_table = "account"
+
     def __str__(self):
         return self.accountusername
     
@@ -22,6 +25,9 @@ class ProfileAccount(models.Model):
         on_delete=models.CASCADE,
         unique=True    
     )
+
+    class Meta:
+        db_table = "profile_account"
 
     def __str__(self):
         return f"{self.profilename} {self.profilelastname}"

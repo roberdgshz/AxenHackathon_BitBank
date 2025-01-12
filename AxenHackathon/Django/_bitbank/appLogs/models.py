@@ -6,6 +6,9 @@ class AuditType(models.Model):
     auditid   = models.IntegerField(primary_key=True)
     auditname = models.CharField(unique=True, max_length=255)
 
+    class Meta:
+        db_table = "audit_type"
+
     def __str__(self):
         return self.auditname
 
@@ -22,5 +25,8 @@ class Auditlog(models.Model):
     auditlogdescription = models.TextField()
     auditlogtime        = models.DateTimeField(blank=True, null=True)
 
+    class Meta:
+        db_table = "auditlog"
+
     def __str__(self):
-        return f"{self.auditlogid}, {self.auditlogtime}"
+        return f"Notification: {self.auditlogid}, time: {self.auditlogtime}, by: {self.auditlogaccountid}"

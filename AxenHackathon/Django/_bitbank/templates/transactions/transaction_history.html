@@ -28,11 +28,11 @@
                 <tbody>
                     {% for transaction in transactions %}
                         <tr>
-                            <td>{{ transaction.TransactionCoin_id }}</td>
-                            <td>{{ transaction.TransactionAmount }}</td>
-                            <td>{{ transaction.TransactionDate }}</td>
-                            <td>{{ transaction.TransactionReceiver }}</td>
-                            <td><a href="{% url 'transaction_info' transaction.TransactionID %}">Info</a></td>
+                            <td>{{ transaction.coinid }}</td>
+                            <td>{{ transaction.amount }}</td>
+                            <td>{{ transaction.date }}</td>
+                            <td>{{ transaction.receiver }}</td>
+                            <td><a href="{% url 'transaction_info' transaction.id %}">Info</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>

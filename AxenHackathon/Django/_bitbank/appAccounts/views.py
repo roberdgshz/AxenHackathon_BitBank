@@ -1,5 +1,10 @@
 from django.views.generic import TemplateView
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate
+from django.contrib import messages
+from django.contrib.auth.models import User
+
+from django.db import connection
 from .models import Account
 
 # Create your views here.
@@ -9,11 +14,65 @@ class ViewCompletation(TemplateView):
 class ViewAccount(TemplateView):
     template_name = 'account/account.html'
 
-class ViewLogin(TemplateView):
-    template_name = 'account/login.html'
+def ViewLoginUser(request):
+    if request.method == 'POST':
+        username_or_email = request.POST.get('username')
+        password = request.POST.get('password')
 
-class ViewSignup(TemplateView):
-    template_name = 'account/signup.html'
+        if not username_or_email or not password:
+            messages.error(request, "Both username/email and password are required.")
+            return redirect('login')
+
+        # Busca al usuario por correo o por nombre de usuario
+        user = User.objects.filter(email=username_or_email).first()
+        if user:
+            username = user.username  # Obtén el username si se proporcionó email
+        else:
+            username = username_or_email  # Asume que se proporcionó un username
+
+        # Autentica al usuario
+        authenticated_user = authenticate(request, username=username, password=password)
+        if authenticated_user is not None:
+            login(request, authenticated_user)
+            messages.success(request, "Login successful!")
+            return redirect('home')
+        else:
+            messages.error(request, "Invalid email/username or password.")
+            return redirect('login')
+
+    return render(request, 'account/login.html')
+
+def ViewRegisterUser(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        username = request.POST.get('AccountUsername')
+        nip = request.POST.get('AccountNip')  
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+
+        # Validaciones básicas
+        if password1 != password2:
+            messages.error(request, "Passwords do not match.")
+            return redirect('register')
+
+        if User.objects.filter(username=username).exists():
+            messages.error(request, "Username already taken.")
+            return redirect('register')
+
+        if User.objects.filter(email=email).exists():
+            messages.error(request, "Email already in use.")
+            return redirect('register')
+
+        # Crear usuario
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT insert_user_account('"+username+"','"+password1+"','"+email+"',"+nip+");")
+ 
+        #user = authenticate(request, username=username, password=password1)
+        #login(request,user)
+        messages.success(request, "Registration successful!")
+        return redirect('login')
+
+    return render(request, 'account/signup.html')
 
 def ViewRedirect(request):
     accounts = Account.objects.all()

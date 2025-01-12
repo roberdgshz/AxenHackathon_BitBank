@@ -17,19 +17,17 @@
             <p>Here is the list of available currencies in your wallet:</p>
             {% for wallet in wallets %}
                 <div class="coin-list">
-                    <a href="{% url 'wallet_coin' wallet.WalletID %}">
-                        {% if wallet.WalletAccountsID_id == user.AccountID %} 
-                            <div class="wallet-list">
-                                <div class="wallet-item">
-                                    <span class="coin-name"> Coin: {{ wallet.WalletCoinsID_id }}, Amount: {{ wallet.WalletCoinQuantity }}</span>
-                                    {% if wallet.WalletCoinsID_id == 2 %}
-                                        <span class="coin-amount">Price: {{ wallet.WalletBalance }} USD</span>
-                                    {% else %}
-                                        <span class="coin-amount">Price: {{ wallet.WalletBalance }} BTC</span>
-                                    {% endif %}
-                                </div>
+                    <a href="{% url 'wallet_coin' wallet.id %}">
+                        <div class="wallet-list">
+                            <div class="wallet-item">
+                                <span class="coin-name"> Coin: {{ wallet.coinid }}, Amount: {{ wallet.quantity }}</span>
+                                {% if wallet.coinid == 4 %}
+                                    <span class="coin-amount">Value: {{ wallet.balance }} USD</span>
+                                {% else %}
+                                    <span class="coin-amount">Value: {{ wallet.balance }} BTC</span>
+                                {% endif %}
                             </div>
-                        {% endif %}
+                        </div>
                     </a>
                 </div>
             {% endfor %}

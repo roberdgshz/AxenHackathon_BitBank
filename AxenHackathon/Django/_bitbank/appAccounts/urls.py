@@ -5,6 +5,7 @@ urlpatterns = [
     path('completation/', ViewCompletation.as_view(), name="completation"),
     path('validate-username/', ViewRedirect, name='validate_username'),
     path('profile/', ViewAccount.as_view(), name="account"),
-    path('login/', ViewLogin.as_view(), name='login'),
-    path('signup/', ViewSignup.as_view(), name='signup')
+    path('login/', ViewLoginUser, name='login'),
+    path('signup/', ViewRegisterUser, name='signup'),
+    path('register/', ViewRegisterUser, name="register"),
 ]

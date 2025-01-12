@@ -17,10 +17,14 @@
             <p>Below are the available currencies for exchange:</p>
             {% for coin in coins %}
                 <div class="coin-list">
-                    <a href="{% url 'coin_info' coin.CoinID %}">
+                    <a href="{% url 'coin_info' coin.id %}">
                         <div class="coin-item">
-                            <span class="coin-name">{{ coin.CoinKey }} {{ coin.CoinName }}</span>
-                            <span class="coin-price">{{ coin.CoinValue }}</span>
+                            <span class="coin-name">{{ coin.key }} {{ coin.name }}</span>
+                            {% if coin.id == 4 %}
+                                <span class="coin-price">{{ coin.value }} USD</span>
+                            {% else %}
+                                <span class="coin-price">{{ coin.value }} BTC</span>
+                            {% endif %}
                         </div>
                     </a>
                 </div>
