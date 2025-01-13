@@ -18,8 +18,8 @@
                 <p>Choose an option to manage your transactions:</p>
             
                 <div class="button-group">
-                    <a href="{% url 'transaction_deposit' %}" class="transaction-button">Deposit</a>
-                    <a href="{% url 'transaction_receive' %}" class="transaction-button">Receive</a>
+                    <a href="{% url 'transaction_deposit' request.user.username %}" class="transaction-button">Deposit</a>
+                    <a href="{% url 'transaction_receive' request.user.username %}" class="transaction-button">Receive</a>
                     <a href="{% url 'transaction_history' request.user.username %}" class="transaction-button">Transaction History</a>
                 </div>
             </div>

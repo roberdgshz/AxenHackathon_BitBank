@@ -2,16 +2,36 @@ from django.views.generic import TemplateView
 from django.shortcuts import render
 
 from django.db import connection
+from django.contrib import messages
+from decimal import Decimal
 
 # Create your views here.
-class ViewTransactionDeposit(TemplateView):
-    template_name = 'transactions/transaction_deposit.html'
+def ViewTransactionDeposit(request, user):
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT coinid, coinname, coinkey FROM coin")
+        resultados = cursor.fetchall()
+    
+    monedas = [
+        {"id":fila[0], "name":fila[1], "key":fila[2]}
+        for fila in resultados
+    ]
+
+    return render(request, 'transactions/transaction_deposit.html', {'coins':monedas, "user":user})
 
 class ViewTransactionMenu(TemplateView):
     template_name = 'transactions/transaction_menu.html'
 
-class ViewTransactionReceive(TemplateView):
-    template_name = 'transactions/transaction_receive.html'
+def ViewTransactionReceive(request, user):
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT coinid, coinname, coinkey FROM coin")
+        resultados = cursor.fetchall()
+    
+    monedas = [
+        {"id":fila[0], "name":fila[1], "key":fila[2]}
+        for fila in resultados
+    ]
+
+    return render(request, 'transactions/transaction_receive.html', {"coins":monedas, "user":user})
 
 def ViewTransactionHistory(request, user):
     with connection.cursor() as cursor:
@@ -44,3 +64,75 @@ def ViewTransactionInfo(request, id):
         transaccion = {"id": resultado[0], "date":resultado[1], "receiver":resultado[2], "transmitter":resultado[3], "coinid":resultado[4], "amount":resultado[5], "status":resultado[6]}
 
     return render(request, 'transactions/transaction_info.html', {'transaction':transaccion})
+
+def ViewTransactionDepositGenerator(request):
+    if request.method == 'POST':
+        amount = request.POST.get('amount')
+        currency = request.POST.get('currency')
+        receiver = request.POST.get('receiver')
+        user = request.POST.get('username')
+
+        with connection.cursor() as cursor: # This is to search the transmitter's id
+            cursor.execute("SELECT accountid FROM account WHERE accountusername = %s",[user])
+            id = cursor.fetchone()
+
+        with connection.cursor() as cursor: # This is to search the available's quantity of the transmitter
+            cursor.execute("SELECT walletcoinquantity FROM wallet WHERE walletaccountsid_id = %s AND walletcoinsid_id = %s",[id[0], currency])
+            availableamount = cursor.fetchone()
+        
+        if availableamount[0] >= Decimal(amount) :
+            with connection.cursor() as cursor: # This is to search the receiver's id
+                cursor.execute("SELECT accountid FROM account WHERE accountusername = %s",[receiver])
+                idreceiver = cursor.fetchone()
+
+            with connection.cursor() as cursor: # This is to search if the receiver already has a wallet with the specific coin
+                cursor.execute("SELECT * FROM wallet WHERE walletcoinsid_id = %s AND walletaccountsid_id = %s",[currency, idreceiver[0]])
+                walletreceiver = cursor.fetchone()
+
+            with connection.cursor() as cursor: # This is to get the value of the coin
+                cursor.execute("SELECT coinvalue FROM coin WHERE coinid = %s",[currency])
+                coinvalue = cursor.fetchone()
+
+            if walletreceiver:
+                with connection.cursor() as cursor: # This is to search the available's quantity of the receiver
+                    cursor.execute("SELECT walletcoinquantity FROM wallet WHERE walletaccountsid_id = %s AND walletcoinsid_id = %s",[idreceiver[0], currency])
+                    totalamount = cursor.fetchone()
+
+                transmitternewavailableamount = availableamount[0] - Decimal(amount)
+                receivernewtotalamount = totalamount[0] + Decimal(amount)
+
+                transmitternewbalance = transmitternewavailableamount * coinvalue[0]
+                receivernewbalance = receivernewtotalamount * coinvalue[0]
+
+                with connection.cursor() as cursor: # This is to alter the table with the new quantity's and values
+                    cursor.execute("SELECT alter_wallet(%s,%s,%s,%s,%s,%s,%s)",[currency,id[0],idreceiver[0],transmitternewavailableamount,receivernewtotalamount,transmitternewbalance,receivernewbalance])
+            else :
+                receiverbalance = coinvalue[0] * Decimal(amount)
+                
+                transmitternewavailableamount = availableamount[0] - Decimal(amount)
+                transmitternewbalance = transmitternewavailableamount * coinvalue[0]
+
+                with connection.cursor() as cursor:
+                    cursor.execute("SELECT insert_wallet(%s,%s,%s,%s)",[receiverbalance,idreceiver[0],currency,amount])
+                
+                with connection.cursor() as cursor:
+                    cursor.execute("UPDATE wallet SET walletquantity = %s, walletbalance = %s WHERE walletaccountsid_id = %s AND walletcoinsid_id = %s",[transmitternewavailableamount,transmitternewbalance,currency,id[0]])
+        else:
+            messages.error(request, "Not enough quantity available!")
+            return render(request, 'transactions/transaction_deposit.html')
+    return render(request, 'transactions/transaction_deposit_generator.html')
+
+def ViewTransactionReceiveGenerator(request):
+    if request.method == 'POST':
+        amount = request.POST.get('amount')
+        currency = request.POST.get('currency')
+        user = request.POST.get('username')
+
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT accountid FROM account WHERE accountusername = %s",[user])
+            id = cursor.fetchone()
+
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT insert_transaction_folio(%s,%s,%s)",[id[0],amount,currency])
+
+    return render(request, 'transactions/transaction_receive_generator.html')

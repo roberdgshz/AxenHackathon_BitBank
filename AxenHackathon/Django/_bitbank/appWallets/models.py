@@ -25,7 +25,7 @@ class Wallet(models.Model):
         Coin,
         on_delete=models.CASCADE,
     )
-    walletcoinQuantity = models.BigIntegerField()
+    walletcoinquantity = models.DecimalField(max_digits=100,decimal_places=20)
     walletbalance      = models.DecimalField(max_digits=100,decimal_places=20)
 
     class Meta:

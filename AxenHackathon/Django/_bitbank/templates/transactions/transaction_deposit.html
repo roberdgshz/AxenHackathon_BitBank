@@ -12,36 +12,35 @@
         <link rel="stylesheet" type="text/css" href="{% static 'styles/transaction_deposit.css' %}">
     {% endblock %}
     {% block content %}
-    <div class="transaction-deposit-container">
-        <h1>Deposit Transaction</h1>
-        <p>Fill in the details below to make a deposit.</p>
+        <div class="transaction-deposit-container">
+            <h1>Deposit Transaction</h1>
+            <p>Fill in the details below to make a deposit.</p>
 
-        <form method="POST" class="deposit-form">
-            {% csrf_token %}
-            
-            <div class="form-group">
-                <label for="amount">Amount</label>
-                <input type="number" id="amount" name="amount" placeholder="Enter the amount" required>
-            </div>
+            <form method="POST" class="deposit-form" action="{% url 'transaction_deposit_generator' %}">
+                {% csrf_token %}
+                <input type="hidden" name="username" value="{{ request.user.username }}">
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input type="number" id="amount" name="amount" placeholder="Enter the amount" required>
+                </div>
 
-            <div class="form-group">
-                <label for="currency">Currency Type</label>
-                <select id="currency" name="currency" required>
-                    <option value="USD">USD - US Dollar</option>
-                    <option value="EUR">EUR - Euro</option>
-                    <option value="BTC">BTC - Bitcoin</option>
-                    <option value="ETH">ETH - Ethereum</option>
-                </select>
-            </div>
+                <div class="form-group">
+                    <label for="currency">Currency Type</label>
+                    <select id="currency" name="currency" required>
+                        {% for coin in coins %}
+                            <option value="{{ coin.id }}">{{ coin.key }} - {{ coin.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
-            <div class="form-group">
-                <label for="receiver">Receiver</label>
-                <input type="text" id="receiver" name="receiver" placeholder="Enter receiver's name or wallet address" required>
-            </div>
+                <div class="form-group">
+                    <label for="receiver">Receiver</label>
+                    <input type="text" id="receiver" name="receiver" placeholder="Enter receiver's name or wallet address" required>
+                </div>
 
-            <button type="submit" class="submit-button">Submit Deposit</button>
-        </form>
-    </div>
+                <button type="submit" class="submit-button">Submit Deposit</button>
+            </form>
+        </div>
     {% endblock %}
 </body>
 </html>
