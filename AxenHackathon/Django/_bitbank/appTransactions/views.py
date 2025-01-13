@@ -108,9 +108,6 @@ def ViewTransactionDepositGenerator(request):
                     with connection.cursor() as cursor: # This is to alter the table with the new quantity's and values
                         cursor.execute("SELECT alter_wallet(%s,%s,%s,%s,%s,%s,%s)",[currency,id[0],idreceiver[0],transmitternewavailableamount,receivernewtotalamount,transmitternewbalance,receivernewbalance])
 
-                    
-                    with connection.cursor() as cursor:
-                        cursor.execute("SELECT insert_notification_transaction(%s,%s,%s)",[])
                 else :
                     receiverbalance = coinvalue[0] * Decimal(amount)
                     
@@ -126,6 +123,15 @@ def ViewTransactionDepositGenerator(request):
                 messages.error(request, "Not enough quantity available!")
         else :
             messages.error(request, "Not enough quantity available!")
+        
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT coinkey FROM coin WHERE coinid = %s",[currency])
+            coin = cursor.fetchone()
+
+        description = user+" made a transaction of "+str(amount)+" "+str(coin[0])+" to "+receiver
+
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT insert_notification_transaction(%s,%s,%s)",[description,id,idreceiver[0]])
     return render(request, 'transactions/transaction_deposit_generator.html')
 
 def ViewTransactionReceiveGenerator(request):
@@ -155,11 +161,19 @@ def ViewTransactionReceiveGenerator(request):
             
             with connection.cursor() as cursor:
                 cursor.execute("UPDATE wallet SET walletcoinquantity = %s, walletbalance = %s WHERE walletaccountsid_id = %s AND walletcoinsid_id = %s", [newquantity,newbalance,id,currency])
-            
         else:
             with connection.cursor() as cursor:
                 cursor.execute("SELECT insert_wallet(%s,%s,%s,%s)",[balance,id,currency,amount])
-        
+                    
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT coinkey FROM coin WHERE coinid = %s",[currency])
+            coin = cursor.fetchone()
+
+        description = "Bitbank made a transaction of "+str(amount)+" "+str(coin[0])+" to "+user
+
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT insert_log_transactionreceiver(%s,%s)",[description,id])
+
         with connection.cursor() as cursor:
             cursor.execute("SELECT insert_transaction_folio(%s,%s,%s)",[id,amount,currency])
 
