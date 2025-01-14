@@ -11,8 +11,17 @@ from .models import Account
 class ViewCompletation(TemplateView):
     template_name = 'account/completation.html'
 
-class ViewAccount(TemplateView):
-    template_name = 'account/account.html'
+def ViewAccount(request, user):
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM account WHERE accountusername = %s",[user])
+        resultados = cursor.fetchall()
+    
+    cuenta = [
+        {"id":fila[0],"username":fila[1],"password":fila[2],"email":fila[3],"nip":fila[4]}
+        for fila in resultados
+    ]
+
+    return render(request, 'account/account.html', {'user':cuenta})
 
 def ViewLoginUser(request):
     if request.method == 'POST':

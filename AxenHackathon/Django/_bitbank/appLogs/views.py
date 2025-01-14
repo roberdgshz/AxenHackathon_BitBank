@@ -6,7 +6,7 @@ from django.db import connection
 def ViewNotificationList(request, user):
     with connection.cursor() as cursor:
         cursor.execute("""SELECT auditlogid, auditlogdescription, auditlogtime, audittypeid_id FROM auditlog WHERE auditlogaccountid_id = 
-                       (SELECT accountid FROM account WHERE accountusername = '"""+user+"""');""")
+                       (SELECT accountid FROM account WHERE accountusername = %s);""",[user])
         resultados = cursor.fetchall()
 
     notificaciones = [

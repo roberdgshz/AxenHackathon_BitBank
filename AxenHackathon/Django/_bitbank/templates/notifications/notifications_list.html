@@ -21,9 +21,9 @@
                         <div class="notification-item">
                             <span class="notification-date">{{ log.time }}</span>
                             <div class="notification-message">
-                                {% if log.id == 1 %}
+                                {% if log.type == 1 %}
                                     <strong>Security:</strong> {{ log.description }}
-                                {% else %}
+                                {% elif log.type == 2 %}
                                     <strong>Transaction:</strong> {{ log.description }}
                                 {% endif %}
                             </div>

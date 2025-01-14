@@ -17,9 +17,9 @@
 
             <div class="notification-details">
                 <p><strong>ID:</strong> {{ log.id }}</p>
-                {% if log.id == 1 %}
+                {% if log.type == 1 %}
                     <p><strong>Type:</strong> Security</p>
-                {% elif log.id == 2 %}
+                {% elif log.type == 2 %}
                     <p><strong>Type:</strong> Transaction</p>
                 {% endif %}
                 <p><strong>Description:</strong> {{ log.description }}</p>
