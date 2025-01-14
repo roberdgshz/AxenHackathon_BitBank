@@ -17,12 +17,9 @@
     
         <div class="coin-details">
             <p><strong>Coin ID:</strong> {{ wallet.coinid }}</p>
+            <p><strong>Coin name:</strong> {{ wallet.coinname }}</p>
             <p><strong>Amount:</strong> {{ wallet.quantity }}</p>
-            {% if coinid == 4 %}
-                <p><strong>Value:</strong> {{ wallet.balance }} USD</p>
-            {% else %}
-                <p><strong>Value:</strong> {{ wallet.balance }} BTC</p>
-            {% endif %}
+            <p><strong>Value:</strong> {{ wallet.balance }} {{ wallet.coinkey }}</p>
         </div>
     
         <a href="{% url 'wallet_list' request.user.username %}" class="back-link">← Back to Wallet</a>

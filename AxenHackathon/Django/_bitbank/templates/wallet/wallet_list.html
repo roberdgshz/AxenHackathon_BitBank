@@ -20,12 +20,8 @@
                     <a href="{% url 'wallet_coin' wallet.id %}">
                         <div class="wallet-list">
                             <div class="wallet-item">
-                                <span class="coin-name"> Coin: {{ wallet.coinid }}, Amount: {{ wallet.quantity }}</span>
-                                {% if wallet.coinid == 4 %}
-                                    <span class="coin-amount">Value: {{ wallet.balance }} USD</span>
-                                {% else %}
-                                    <span class="coin-amount">Value: {{ wallet.balance }} BTC</span>
-                                {% endif %}
+                                <span class="coin-name"> Coin: {{ wallet.coinname }}, Amount: {{ wallet.quantity }}</span>
+                                    <span class="coin-amount">Value: {{ wallet.balance }} {{ wallet.coinkey }}</span>
                             </div>
                         </div>
                     </a>

@@ -44,12 +44,14 @@ def ViewTransactionHistory(request, user):
         return []
 
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM transaction WHERE transactiontransmitter_id = %s OR transactionreceiver_id = %s;",
-                       [user_id, user_id])
+        cursor.execute("""SELECT *, c.coinname, r.accountusername as receiver FROM transaction 
+		JOIN coin c ON transaction.transactioncoin_id = c.coinid 
+		JOIN account r ON transaction.transactionreceiver_id = r.accountid
+			WHERE transactionreceiver_id = %s OR transactiontransmitter_id = %s;""",[user_id, user_id])
         resultados = cursor.fetchall()
     
     transacciones = [
-        {"id": fila[0], "date":fila[1], "receiver":fila[2], "transmitter":fila[3], "coinid":fila[4], "amount":fila[5], "status":fila[6]}
+        {"id": fila[0], "date":fila[1], "amount":fila[5], "coinkey":fila[9], "receiver":fila[13]}
         for fila in resultados
     ]
 
@@ -57,11 +59,15 @@ def ViewTransactionHistory(request, user):
 
 def ViewTransactionInfo(request, id):
     with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM transaction WHERE transactionid = %s;",[id])
+            cursor.execute("""SELECT *, c.coinname, r.accountusername as receiver, t.accountusername as transmitter FROM transaction 
+		        JOIN coin c ON transaction.transactioncoin_id = c.coinid 
+		        JOIN account r ON transaction.transactionreceiver_id = r.accountid
+		        JOIN account t ON transaction.transactiontransmitter_id = t.accountid
+			        WHERE transactionid = %s""",[id])
             resultado = cursor.fetchone()
     
     if resultado :
-        transaccion = {"id": resultado[0], "date":resultado[1], "receiver":resultado[2], "transmitter":resultado[3], "coinid":resultado[4], "amount":resultado[5], "status":resultado[6]}
+        transaccion = {"id": resultado[0], "date":resultado[1], "amount":resultado[5], "coinkey":resultado[9], "receiver":resultado[13], "transmitter":resultado[18]}
 
     return render(request, 'transactions/transaction_info.html', {'transaction':transaccion})
 
@@ -119,19 +125,23 @@ def ViewTransactionDepositGenerator(request):
                     
                     with connection.cursor() as cursor:
                         cursor.execute("UPDATE wallet SET walletcoinquantity = %s, walletbalance = %s WHERE walletaccountsid_id = %s AND walletcoinsid_id = %s",[transmitternewavailableamount,transmitternewbalance,id[0],currency])
+                
+                with connection.cursor() as cursor:
+                    cursor.execute("SELECT coinkey FROM coin WHERE coinid = %s",[currency])
+                    coin = cursor.fetchone()
+
+                description = user+" made a transaction of "+str(amount)+" "+str(coin[0])+" to "+receiver
+
+                with connection.cursor() as cursor:
+                    cursor.execute("SELECT insert_notification_transaction(%s,%s,%s)",[description,id,idreceiver[0]])
+
+                with connection.cursor() as cursor:
+                    cursor.execute("SELECT insert_transaction_deposit(%s,%s,%s,%s);",[idreceiver[0],id[0],currency,amount])
+
             else:
                 messages.error(request, "Not enough quantity available!")
         else :
             messages.error(request, "Not enough quantity available!")
-        
-        with connection.cursor() as cursor:
-            cursor.execute("SELECT coinkey FROM coin WHERE coinid = %s",[currency])
-            coin = cursor.fetchone()
-
-        description = user+" made a transaction of "+str(amount)+" "+str(coin[0])+" to "+receiver
-
-        with connection.cursor() as cursor:
-            cursor.execute("SELECT insert_notification_transaction(%s,%s,%s)",[description,id,idreceiver[0]])
     return render(request, 'transactions/transaction_deposit_generator.html')
 
 def ViewTransactionReceiveGenerator(request):

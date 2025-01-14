@@ -32,12 +32,11 @@ def ViewLoginUser(request):
             messages.error(request, "Both username/email and password are required.")
             return redirect('login')
 
-        # Busca al usuario por correo o por nombre de usuario
         user = User.objects.filter(email=username_or_email).first()
         if user:
-            username = user.username  # Obtén el username si se proporcionó email
+            username = user.username  
         else:
-            username = username_or_email  # Asume que se proporcionó un username
+            username = username_or_email 
 
         # Autentica al usuario
         authenticated_user = authenticate(request, username=username, password=password)

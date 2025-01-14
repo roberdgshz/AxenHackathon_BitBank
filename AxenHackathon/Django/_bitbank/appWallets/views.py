@@ -36,12 +36,13 @@ def ViewWalletList(request, user):
         return []
 
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM wallet WHERE walletaccountsid_id = %s;",
-                       [user_id])
+        cursor.execute("""SELECT *, c.coinname FROM wallet 
+		    JOIN coin c ON wallet.walletcoinsid_id = c.coinid 
+			    WHERE walletaccountsid_id = %s""",[user_id])
         resultados = cursor.fetchall()
 
     wallets = [
-        {"id":fila[0], "balance":fila[1], "accountid":fila[2], "coinid":fila[3], "quantity":fila[4]}
+        {"id":fila[0], "balance":fila[1], "quantity":fila[4], "coinname":fila[6], "coinkey":fila[7]}
         for fila in resultados
     ]
 
@@ -49,10 +50,12 @@ def ViewWalletList(request, user):
 
 def ViewWalletCoin(request, walletid):
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM wallet WHERE walletid = %s;",[walletid])
+        cursor.execute("""SELECT *, c.coinname FROM wallet 
+		    JOIN coin c ON wallet.walletcoinsid_id = c.coinid 
+			    WHERE walletid = %s""",[walletid])
         resultado = cursor.fetchone()
 
     if resultado :
-        wallet = {"id":resultado[0], "balance":resultado[1], "accountid":resultado[2], "coinid":resultado[3], "quantity":resultado[4]}
+        wallet = {"id":resultado[0], "balance":resultado[1], "accountid":resultado[2], "coinid":resultado[3], "quantity":resultado[4], "coinname":resultado[6], "coinkey":resultado[7]}
 
     return render(request, 'wallet/wallet_coin.html', {'wallet':wallet})
