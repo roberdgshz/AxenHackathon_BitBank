@@ -3,28 +3,34 @@ from appAccounts.models import Account
 
 # Create your models here.
 class Coin(models.Model):
-    CoinID      = models.BigAutoField(primary_key=True)
-    CoinName    = models.CharField(max_length=100)
-    CoinKey     = models.CharField(max_length=5)
-    CoinImgPath = models.CharField(max_length=255, unique=True, null=True, blank=True)
-    CoinValue   = models.BigIntegerField()
+    coinid      = models.BigAutoField(primary_key=True)
+    coinname    = models.CharField(max_length=100)
+    coinkey     = models.CharField(max_length=5)
+    coinimgpath = models.ImageField(upload_to='coins/', unique=True, null=True, blank=True)
+    coinvalue   = models.DecimalField(max_digits=100,decimal_places=15)
+
+    class Meta:
+        db_table = "coin"
 
     def __str__(self):
-        return self.CoinName
+        return self.coinname
     
 class Wallet(models.Model):
-    WalletID         = models.BigAutoField(primary_key=True)
-    WalletAccountsID = models.ForeignKey(
+    walletid         = models.BigAutoField(primary_key=True)
+    walletaccountsid = models.ForeignKey(
         Account,
         on_delete=models.CASCADE,
     )
-    WalletCoinsID    = models.ForeignKey(
+    walletcoinsid    = models.ForeignKey(
         Coin,
         on_delete=models.CASCADE,
     )
-    WalletCoinQuantity = models.BigIntegerField()
-    WalletBalance      = models.BigIntegerField()
+    walletcoinquantity = models.DecimalField(max_digits=100,decimal_places=20)
+    walletbalance      = models.DecimalField(max_digits=100,decimal_places=20)
+
+    class Meta:
+        db_table = "wallet"
 
     def __str__(self):
-        return f"Wallet {self.WalletID} of {self.WalletAccountsID}"
+        return f"Wallet {self.walletid} of {self.walletaccountsid}"
     

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitbank - Login</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+    
+    {% load static %}
+    
+    {% block css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
+    {% endblock %}
+    {% load socialaccount %}
+
+    {% block content %}
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <h1>Login</h1>
+
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" name="username" autocomplete="username" required>
+        <label for="password">Password:</label>
+        <input type="password" name="password" required>
+        <button type="submit">Login</button>
+
+        <a href="{% provider_login_url 'google' %}" class="field google">
+            <span>Sign up with Google</span>
+        </a>
+
+        <a href="{% provider_login_url 'github' %}" class="field github">
+            <span>Sign up with GitHub</span>
+        </a>
+
+        <p>
+            <a href="{% url 'signup' %}">I don't have an account</a>
+        </p>
+
+        <p>
+            <!-- agregar la recuperación de contraseñas -->
+        </p>
+    </form>
+    {% endblock content %}
+</body>
+</html>

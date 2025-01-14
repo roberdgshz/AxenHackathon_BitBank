@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitbank - Notification</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% load static %}
+    {% block css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/notification.css' %}">
+    {% endblock %}
+    {% block content %}
+        <div class="notification-container">
+            <h1>Notification Details</h1>
+
+            <div class="notification-details">
+                <p><strong>ID:</strong> {{ log.id }}</p>
+                {% if log.type == 1 %}
+                    <p><strong>Type:</strong> Security</p>
+                {% elif log.type == 2 %}
+                    <p><strong>Type:</strong> Transaction</p>
+                {% endif %}
+                <p><strong>Description:</strong> {{ log.description }}</p>
+                <p><strong>Registered Time:</strong> {{ log.time }}</p>
+            </div>
+
+            <a href="{% url 'notification_list' request.user.username %}" class="back-link">← Back to Notifications</a>
+        </div>
+    {% endblock %}
+
+</body>
+</html>

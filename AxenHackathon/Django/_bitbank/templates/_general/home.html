@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitbank - Home</title>
+    <style>
+        .fixed-size {
+            width: 10%;
+            height: auto;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    {% extends 'base.html' %}
+
+    {% load static %}
+
+    {% block css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/home2.css' %}">
+    {% endblock css %}
+
+    {% block content %}
+    <body>
+        <header class="hero">  
+            <div class="hero-content">
+                <h1>Welcome to <span class="highlight">BitBank</span></h1>
+                <img src="{% static 'imgs/home/bitbanklogo.webp' %}" alt="Bitbank Logo"  class="fixed-size">
+                <p>The future of banking with seamless transactions in <strong>crypto</strong> and <strong>national currencies</strong>.</p>
+                <div class="cta-buttons">
+                    <a href="{% url 'signup' %}" class="btn primary">Open an Account</a>
+                    <a href="{% url 'about' %}" class="btn secondary">Learn More</a>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="features">
+                <h2>Why Choose BitBank?</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <img src="{% static 'imgs/home/secure.webp' %}" alt="Secure transactions">
+                        <h3>Secure</h3>
+                        <p>State-of-the-art security for all your transactions.</p>
+                    </div>
+                    <div class="feature-item">
+                        <img src="{% static 'imgs/home/fast.webp' %}" alt="Fast transactions">
+                        <h3>Fast</h3>
+                        <p>Instant transfers and exchanges worldwide.</p>
+                    </div>
+                    <div class="feature-item">
+                        <img src="{% static 'imgs/home/global.webp' %}" alt="Global reach">
+                        <h3>Global</h3>
+                        <p>Support for multiple currencies and cryptocurrencies.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="cta">
+                <h2>Start your journey with BitBank today!</h2>
+                <p>Open an account in minutes and experience the best in financial technology.</p>
+                <a href="{% url 'signup' %}" class="btn primary">Get Started</a>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 BitBank. All rights reserved. | <a href="{% url 'about' %}">Privacy Policy</a></p>
+        </footer>
+    </body>
+    {% endblock content %}
+</body>
+</html>

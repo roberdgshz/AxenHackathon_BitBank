@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitbank - Notifications List</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% load static %}
+    {% block css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/notification_list.css' %}">
+    {% endblock %}
+    {% block content %}
+        <div class="notification-container">
+            <h1>Notifications</h1>
+            <p>Here are your latest notifications related to your account.</p>
+            {% for log in logs %}
+                <div class="notification-list">
+                    <a href="{% url 'notification' log.id %}">
+                        <div class="notification-item">
+                            <span class="notification-date">{{ log.time }}</span>
+                            <div class="notification-message">
+                                {% if log.type == 1 %}
+                                    <strong>Security:</strong> {{ log.description }}
+                                {% elif log.type == 2 %}
+                                    <strong>Transaction:</strong> {{ log.description }}
+                                {% endif %}
+                            </div>
+                        </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitbank - Wallet</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% load static %}
+    {% block css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/wallet_list.css' %}">
+    {% endblock %}
+    {% block content %}
+        <div class="wallet-container">
+            <h1>Your Wallet</h1>
+            <p>Here is the list of available currencies in your wallet:</p>
+            {% for wallet in wallets %}
+                <div class="coin-list">
+                    <a href="{% url 'wallet_coin' wallet.id %}">
+                        <div class="wallet-list">
+                            <div class="wallet-item">
+                                <span class="coin-name"> Coin: {{ wallet.coinid }}, Amount: {{ wallet.quantity }}</span>
+                                {% if wallet.coinid == 4 %}
+                                    <span class="coin-amount">Value: {{ wallet.balance }} USD</span>
+                                {% else %}
+                                    <span class="coin-amount">Value: {{ wallet.balance }} BTC</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock %}    
+</body>
+</html>

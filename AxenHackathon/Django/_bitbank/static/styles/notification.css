@@ -1,0 +1,66 @@
+.notification-container {
+    font-family: Arial, sans-serif;
+    margin: 2rem auto;
+    max-width: 800px;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+.notification-container h1 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.notification-details {
+    font-size: 1.2rem;
+    color: #7f8c8d;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.notification-details p {
+    margin: 0.5rem 0;
+}
+
+.notification-details strong {
+    color: #34495e;
+}
+
+.back-link {
+    display: inline-block;
+    font-size: 1rem;
+    color: #3498db;
+    text-decoration: none;
+    margin-top: 1rem;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .notification-container {
+        padding: 1rem;
+    }
+
+    .notification-container h1 {
+        font-size: 2rem;
+    }
+
+    .notification-details {
+        font-size: 1rem;
+    }
+
+    .back-link {
+        font-size: 0.9rem;
+    }
+}

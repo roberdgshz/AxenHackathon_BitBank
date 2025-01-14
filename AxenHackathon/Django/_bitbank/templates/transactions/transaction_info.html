@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitbank - Transaction Info</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% load static %}
+    {% block css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/transaction_info.css' %}">
+    {% endblock %}
+    {% block content %}
+        <div class="transaction-info-container">
+            <h1>Transaction Information</h1>
+
+            <div class="transaction-details">
+                <p><strong>ID:</strong> {{ transaction.id }}</p>
+                <p><strong>Coin:</strong> {{ transaction.coinid }}</p>
+                <p><strong>Amount:</strong> {{ transaction.amount }}</p>
+                <p><strong>Date:</strong> {{ transaction.date }}</p>
+                <p><strong>Receiver:</strong> {{ transaction.receiver }}</p>
+                <p><strong>Transmitter:</strong> {{ transaction.transmitter }}</p>
+            </div>
+
+            <a href="{% url 'transaction_history' request.user.username %}" class="back-link">← Back to Transaction History</a>
+        </div>
+    {% endblock %}
+
+</body>
+</html>

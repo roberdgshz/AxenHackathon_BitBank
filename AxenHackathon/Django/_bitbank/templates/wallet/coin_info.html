@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitbank - Coin</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% load static %}
+    {% block css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/coin_info.css' %}">
+    {% endblock %}
+    {% block content %}
+        <div class="coin-info-container">
+            <a href="{% url 'coin_market' %}" class="back-link">← Back to Coin Market</a>
+
+            <div class="coin-header">
+                <img src="/media/{{ coin.img }}" alt="{{ coin.name }} icon" class="coin-icon">
+                <h1>{{ coin.name }} ({{ coin.key }})</h1>
+            </div>
+
+            <div class="coin-details">
+                {% if coin.id == 4 %}
+                    <p><strong>Current Value:</strong> {{ coin.value }} USD</p>
+                {% else %}
+                    <p><strong>Current Value:</strong> {{ coin.value }} BTC</p>
+                {% endif %}
+            </div>
+        </div>
+    {% endblock %}
+</body>
+</html>

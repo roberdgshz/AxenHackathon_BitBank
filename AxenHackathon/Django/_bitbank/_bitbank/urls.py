@@ -16,9 +16,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from .views import *
 
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('appAccounts.urls')),
+    path('', ViewHome.as_view(), name="home"),
+    path('about/', ViewAbout.as_view(), name="about"),
+    path('legal/', ViewLegal.as_view(), name="legal"),
+    path('test/', ViewQuerys, name="query"),
     path('accounts/', include('allauth.urls')),
+    path('account/', include('appAccounts.urls')),
+    path('chat/', include('appChatbot.urls')),
+    path('logs/', include('appLogs.urls')),
+    path('transactions/', include('appTransactions.urls')),
+    path('wallet/', include('appWallets.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

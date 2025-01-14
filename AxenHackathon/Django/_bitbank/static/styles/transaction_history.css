@@ -1,0 +1,76 @@
+.transaction-history-container {
+    font-family: Arial, sans-serif;
+    margin: 2rem auto;
+    max-width: 1200px;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+.transaction-history-container h1 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.transaction-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+}
+
+.transaction-table th,
+.transaction-table td {
+    text-align: left;
+    padding: 0.8rem 1rem;
+    border: 1px solid #ddd;
+    color: #2c3e50;
+}
+
+.transaction-table th {
+    background-color: #34495e;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.transaction-table tbody tr:nth-child(even) {
+    background-color: #f4f4f4;
+}
+
+.transaction-table tbody tr:hover {
+    background-color: #e8f6f3;
+}
+
+.back-link {
+    display: inline-block;
+    font-size: 1rem;
+    color: #3498db;
+    text-decoration: none;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .transaction-history-container {
+        padding: 1rem;
+    }
+
+    .transaction-history-container h1 {
+        font-size: 2rem;
+    }
+
+    .transaction-table th,
+    .transaction-table td {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+    }
+
+    .back-link {
+        font-size: 0.9rem;
+    }
+}

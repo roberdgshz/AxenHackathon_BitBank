@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitbank - Transaction Menu</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% load static %}
+    {% block css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/transaction.css' %}">
+    {% endblock %}
+    {% block content %}
+        {% if request.user.is_authenticated %}
+            <div class="transaction-menu-container">
+                <h1>Transaction Menu</h1>
+                <p>Choose an option to manage your transactions:</p>
+            
+                <div class="button-group">
+                    <a href="{% url 'transaction_deposit' request.user.username %}" class="transaction-button">Deposit</a>
+                    <a href="{% url 'transaction_receive' request.user.username %}" class="transaction-button">Receive</a>
+                    <a href="{% url 'transaction_history' request.user.username %}" class="transaction-button">Transaction History</a>
+                </div>
+            </div>
+        {% else %}
+            <div class="transaction-menu-container">
+                <h1>Transaction Menu</h1>
+                <p>Log in to access to the transaction menu</p>
+            </div>
+        {% endif %}
+    {% endblock %}
+    
+</body>
+</html>

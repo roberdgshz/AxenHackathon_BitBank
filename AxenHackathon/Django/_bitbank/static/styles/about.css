@@ -1,0 +1,58 @@
+.about-container {
+    font-family: Arial, sans-serif;
+    margin: 2rem auto;
+    max-width: 800px;
+    line-height: 1.6;
+    color: #333;
+    background: linear-gradient(110deg, #ffffff, #fcfffc); 
+    padding: 2rem; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+.about-container h1 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.about-container h2 {
+    font-size: 1.8rem;
+    color: #34495e;
+    margin-top: 1.5rem;
+}
+
+.about-container p {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    text-align: justify;
+}
+
+.about-container ul {
+    list-style-type: disc;
+    margin: 1rem 0 1rem 1.5rem;
+}
+
+.about-container li {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+strong {
+    color: #2980b9;
+}
+
+@media (max-width: 600px) {
+    .about-container {
+        padding: 1rem;
+    }
+    
+    .about-container h1 {
+        font-size: 2rem;
+    }
+
+    .about-container h2 {
+        font-size: 1.5rem;
+    }
+}

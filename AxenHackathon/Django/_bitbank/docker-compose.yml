@@ -15,7 +15,7 @@ services:
       - "8000:8000"
     environment:
       DJANGO_SETTINGS_MODULE: _bitbank.settings
-      DATABASE_URL: postgres://eduar:brdnedu36@db:5432/bitbankdb
+      DATABASE_URL: postgres://adminrober:123@db:5432/bitbankdb
     depends_on:
       - db
 
@@ -23,8 +23,8 @@ services:
     image: postgres:16
     container_name: postgres_db
     environment:
-      POSTGRES_USER: eduar
-      POSTGRES_PASSWORD: brdnedu36
+      POSTGRES_USER: adminrober
+      POSTGRES_PASSWORD: 123
       POSTGRES_DB: bitbankdb
     ports:
       - "5432:5432"
@@ -43,3 +43,4 @@ services:
 
 volumes:
   postgres_data:
+
