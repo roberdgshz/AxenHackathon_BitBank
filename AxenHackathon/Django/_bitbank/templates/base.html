@@ -24,6 +24,7 @@
             </ul>
             <ul class="right">
                 {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'chatbot_page' request.user.username %}">Chatbot</a></li>
                     <li><a href="{% url 'wallet_list' request.user.username %}">Wallet</a></li>
                     <li><a href="{% url 'notification_list' request.user.username %}">Notifications</a></li>
                     <li><a href="{% url 'account' request.user.username %}">{{ request.user.username }}</a></li>

@@ -30,6 +30,8 @@ ALLOWED_HOSTS = []
 
 SITE_ID = 1
 
+#OPENAI_API_KEY = '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'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Microservices for project
     'appAccounts',
+    'appChatbot',
     'appLogs',
     'appTransactions',
     'appWallets',

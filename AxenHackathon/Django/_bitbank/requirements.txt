@@ -6,3 +6,5 @@ requests>=2.25.1
 PyJWT>=2.6.0
 cryptography>=3.3.2
 Pillow>=11.1.0
+openai>=1.59.7
+django-dotenv>=1.4.2

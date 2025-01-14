@@ -28,6 +28,7 @@ urlpatterns = [
     path('test/', ViewQuerys, name="query"),
     path('accounts/', include('allauth.urls')),
     path('account/', include('appAccounts.urls')),
+    path('chat/', include('appChatbot.urls')),
     path('logs/', include('appLogs.urls')),
     path('transactions/', include('appTransactions.urls')),
     path('wallet/', include('appWallets.urls')),
