@@ -23,7 +23,7 @@
                             <div class="notification-message">
                                 {% if log.type == 1 %}
                                     <strong>Security:</strong> {{ log.description }}
-                                {% elif log.type == 2 %}
+                                {% else %}
                                     <strong>Transaction:</strong> {{ log.description }}
                                 {% endif %}
                             </div>

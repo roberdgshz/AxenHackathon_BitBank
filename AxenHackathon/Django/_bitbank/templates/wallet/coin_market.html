@@ -20,11 +20,25 @@
                     <a href="{% url 'coin_info' coin.id %}">
                         <div class="coin-item">
                             <span class="coin-name">{{ coin.key }} {{ coin.name }}</span>
-                            {% if coin.id == 4 %}
-                                <span class="coin-price">{{ coin.value }} USD</span>
-                            {% else %}
-                                <span class="coin-price">{{ coin.value }} BTC</span>
-                            {% endif %}
+                            <span class="coin-price">{{ coin.value }}
+                                {% if coin.key == 'MXN' %}
+                                <span class="coin-amount"> {{ coin.key }} </span>
+                                {% elif coin.key == 'EUR' %}
+                                    <span class="coin-amount">{{ coin.key }}</span>
+                                {% elif coin.key == 'CAD' %}
+                                    <span class="coin-amount">{{ coin.key }}</span>
+                                {% elif coin.key == 'CNY' %}
+                                    <span class="coin-amount">{{ coin.key }}</span>
+                                {% elif coin.key == 'JPY' %}
+                                    <span class="coin-amount">{{ coin.key }}</span>
+                                {% elif coin.key == 'KRW' %}
+                                    <span class="coin-amount">{{ coin.key }}</span>
+                                {% elif coin.key == 'RUB' %}
+                                    <span class="coin-amount">{{ coin.key }}</span>
+                                {% else %}
+                                    <span class="coin-amount"> USD</span>
+                                {% endif %}
+                            </span>
                         </div>
                     </a>
                 </div>

@@ -51,7 +51,7 @@ def ViewTransactionHistory(request, user):
         resultados = cursor.fetchall()
     
     transacciones = [
-        {"id": fila[0], "date":fila[1], "amount":fila[5], "coinkey":fila[9], "receiver":fila[13]}
+        {"id": fila[0], "amount":fila[1], "date":fila[2], "coinkey":fila[8], "receiver":fila[23]}
         for fila in resultados
     ]
 
@@ -67,7 +67,7 @@ def ViewTransactionInfo(request, id):
             resultado = cursor.fetchone()
     
     if resultado :
-        transaccion = {"id": resultado[0], "date":resultado[1], "amount":resultado[5], "coinkey":resultado[9], "receiver":resultado[13], "transmitter":resultado[18]}
+        transaccion = {"id": resultado[0], "date":resultado[2], "amount":resultado[1], "coinkey":resultado[9], "receiver":resultado[33], "transmitter":resultado[34]}
 
     return render(request, 'transactions/transaction_info.html', {'transaction':transaccion})
 
@@ -188,3 +188,97 @@ def ViewTransactionReceiveGenerator(request):
             cursor.execute("SELECT insert_transaction_folio(%s,%s,%s)",[id,amount,currency])
 
     return render(request, 'transactions/transaction_receive_generator.html')
+
+def ViewTransactionConvert(request, user):
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT coinid, coinname, coinkey FROM coin")
+        resultados = cursor.fetchall()
+    
+    monedas = [
+        {"id":fila[0], "name":fila[1], "key":fila[2]}
+        for fila in resultados
+    ]
+
+    return render(request, 'transactions/transaction_convert.html', {"coins":monedas, "user":user})
+
+def ViewTransactionConvertGenerator(request):
+    if request.method == 'POST':
+        amount = request.POST.get('amount')
+        fromcurrency = request.POST.get('fromcurrency')
+        tocurrency = request.POST.get('tocurrency')
+        user = request.POST.get('username')
+
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT accountid FROM account WHERE accountusername = %s",[user])
+            userid = cursor.fetchone()
+
+        if fromcurrency == tocurrency:
+            messages.error(request, "You can't convert the same coin!")
+            return render(request, 'transactions/transaction_convert.html')
+        else:
+            with connection.cursor() as cursor:
+                cursor.execute("SELECT walletcoinquantity FROM wallet WHERE walletaccountsid_id = %s AND walletcoinsid_id = %s;",[userid, fromcurrency])
+                availableamount = cursor.fetchone()
+            if availableamount:
+                if availableamount[0] >= Decimal(amount): #Apartir de aquí meterlo en una función
+                        with connection.cursor() as cursor:
+                            cursor.execute("SELECT walletbalance FROM wallet WHERE walletaccountsid_id = %s AND walletcoinsid_id = %s;",[userid, fromcurrency])
+                            availablebalance = cursor.fetchone()
+                        with connection.cursor() as cursor:
+                            cursor.execute("SELECT coinvalue FROM coin WHERE coinid = %s",[fromcurrency])
+                            fromcoinvalue = cursor.fetchone()
+                        minustotalbalance = Decimal(amount) * fromcoinvalue[0]
+                        newfromcoinbalance = availablebalance[0] - minustotalbalance
+                        newfromcoinquantity = availableamount[0] - Decimal(amount)
+                            
+                        with connection.cursor() as cursor:
+                            cursor.execute("SELECT coinvalue FROM coin WHERE coinid = %s;",[tocurrency])
+                            tocurrencyvalue = cursor.fetchone()
+                        
+                        with connection.cursor() as cursor: # This is to search if the receiver already has a wallet with the specific coin
+                            cursor.execute("SELECT * FROM wallet WHERE walletcoinsid_id = %s AND walletaccountsid_id = %s",[tocurrency, userid])
+                            walletreceiver = cursor.fetchone()
+                        
+                        if walletreceiver: # En caso de ya tenga una cartera con la moneda se hace un alter
+                            with connection.cursor() as cursor: # Con esto se actualiza la wallet de la moneda original ------------------------------------------------------
+                                cursor.execute("UPDATE wallet SET walletbalance = %s, walletcoinquantity = %s WHERE walletaccountsid_id = %s AND walletcoinsid_id = %s;",
+                                           [newfromcoinbalance, newfromcoinquantity, userid, fromcurrency])
+                        
+                            with connection.cursor() as cursor:
+                                cursor.execute("SELECT walletcoinquantity, walletbalance FROM wallet WHERE walletaccountsid_id = %s AND walletcoinsid_id = %s",[userid, tocurrency])
+                                resultados = cursor.fetchone()
+                            
+                            newtocurrencybalance = minustotalbalance + resultados[1]
+                            newtocurrencyquantity = Decimal(resultados[0]) + (Decimal(minustotalbalance) / Decimal(tocurrency[0]))
+                            
+                            with connection.cursor() as cursor:
+                                cursor.execute("SELECT alter_wallet_convert(%s,%s,%s,%s)",[newtocurrencybalance, newtocurrencyquantity, userid, tocurrency])#----------------
+                        else: #En caso de que no tenga la moneda se hace un insert
+                            with connection.cursor() as cursor: # Con esto se actualiza la wallet de la moneda original ------------------------------------------------------
+                                cursor.execute("UPDATE wallet SET walletbalance = %s, walletcoinquantity = %s WHERE walletaccountsid_id = %s AND walletcoinsid_id = %s;",
+                                           [newfromcoinbalance, newfromcoinquantity, userid, fromcurrency])
+                                
+                            newtocurrencybalance = minustotalbalance
+                            newtocurrencyquantity = Decimal(minustotalbalance) / tocurrencyvalue[0]
+                            
+                            with connection.cursor() as cursor:
+                                cursor.execute("SELECT insert_wallet(%s,%s,%s,%s)",[newtocurrencybalance,userid,tocurrency,newtocurrencyquantity])#-------------------------
+                        
+                        with connection.cursor() as cursor:
+                            cursor.execute("SELECT coinkey FROM coin WHERE coinid = %s",[tocurrency])
+                            coinkey = cursor.fetchone()
+            
+                        description = user+" did a conversion of "+str(amount)+" "+str(fromcurrency)+" to "+str(newtocurrencyquantity)+" "+str(coinkey)
+
+                        with connection.cursor() as cursor:
+                            cursor.execute("SELECT insert_log_transactionreceiver(%s,%s)",[description,userid])
+
+                        with connection.cursor() as cursor:#--------------
+                            cursor.execute("SELECT insert_transaction_deposit(%s,%s,%s,%s);",[userid,userid,fromcurrency,amount])
+                else:
+                    messages.error(request, "You don't have enough coins to make the conversion!")
+                    return render(request, 'transactions/transaction_convert.html')
+            else:
+                messages.error(request, "You can't convert the same coin!")
+                return render(request, 'transactions/transaction_convert.html')
+    return render(request, 'transactions/transaction_convert_generator.html')

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitbank - Convert Coins</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% load static %}
+    {% block css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/transaction_receive.css' %}">
+    {% endblock %}
+    {% block content %}
+        <div class="transaction-receive-container">
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li class="{{ message.tags }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <h1>Make conversion</h1>
+            <p>Fill in the details below to make a conversion.</p>
+        
+            <form method="POST" class="receive-form" action="{% url 'transaction_convert_generator' %}">
+                {% csrf_token %}
+                <input type="hidden" name="username" value="{{ request.user.accountusername }}">
+                
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input type="decimal" id="amount" name="amount" placeholder="Enter the amount" required>
+                </div>
+        
+                <div class="form-group">
+                    <label for="fromcurrency">From Currency Type</label>
+                    <select id="fromcurrency" name="fromcurrency" required>
+                        {% for coin in coins %}
+                            <option value="{{ coin.id }}">{{ coin.key }} - {{ coin.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div> 
+                
+                <div class="form-group">
+                    <label for="tocurrency">To Currency Type</label>
+                    <select id="tocurrency" name="tocurrency" required>
+                        {% for coin in coins %}
+                            <option value="{{ coin.id }}">{{ coin.key }} - {{ coin.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div> 
+
+                <button type="submit" class="submit-button">Make Conversion</button>
+            </form>
+        </div>
+    {% endblock %}  
+</body>
+</html>

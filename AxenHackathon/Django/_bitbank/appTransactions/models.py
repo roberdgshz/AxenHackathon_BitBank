@@ -15,7 +15,7 @@ class TransactionStatus(models.Model):
 
 class Transaction(models.Model):
     transactionid          = models.BigAutoField(primary_key=True)
-    transactionamount      = models.DecimalField(max_digits=100,decimal_places=20)
+    transactionamount      = models.DecimalField(max_digits=100,decimal_places=2)
     transactioncoin        = models.ForeignKey(
         Coin,
         on_delete=models.CASCADE

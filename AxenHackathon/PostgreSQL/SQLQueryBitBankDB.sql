@@ -1,54 +1,63 @@
---create database BitBankDB;
---use BitBankDB;
+create database BitBankDB;
+use BitBankDB;
+USE BanksAccountsDB
+DROP DATABASE BitbankDB;
 
-create table Accounts(
-	AccountID		bigint primary key identity,
-	AccountUsername varchar(255) unique not null,
-	AccountPassword	varchar(255) not null, --- Hash
-	AccountEmail	varchar(255) not null,
-	AccountNIP		int not null
+CREATE TABLE Accounts(
+	AccountID			bigint primary key identity, 
+	AccountUsername		varchar(255) unique not null,
+	AccountPassword		varchar(255) not null,
+	AccountEmail		varchar(255) unique not null,
+	AccountNip			int not null
 );
 
-create table Coins(
+CREATE TABLE Coins(
 	CoinID		bigint primary key identity,
-	CoinName	varchar(100) not null, --Bitcoin
-	CoinKey		varchar(10) not null, --BTC
-	CoinImgPath	varchar(255), -- /images/coins/btc.png
-	CoinValue	bigint not null -- El valor de la moneda será referenciado con respecto a BTC. Ejemplo: 1 EURO equiva a 0.0000114 BTC (26/11/2024 5:39 P.M.) 
+	CoinName	varchar(100) not null,
+	CoinKey		varchar(5) not null,
+	CoinImgPath	varchar(255) unique,
+	CoinValue	bigint not null
 );
 
-create table Wallet(
-	WalletID			bigint primary key identity,
-	WalletBalance		bigint not null,
-	WalletAccountsID	bigint not null, --FK
-	WalletCoinsID		bigint not null, --FK
+CREATE TABLE Wallet(
+    WalletID            bigint primary key identity,
+    WalletAccountsID    bigint not null, -- FK
+    WalletCoinID        bigint not null, -- FK
+    WalletCoinQuantity    bigint not null,
+    WalletBalance        bigint not null,
+    constraint fk_wallet_accounts foreign key (WalletAccountsID) references Accounts(AccountID) on delete cascade,
+    constraint fk_wallet_Coins    foreign key (WalletCoinID)     references Coins(CoinID) on delete cascade
 );
 
-create table WalletCoins(
-	WalletCoinID			bigint primary key identity,
-	WalletCoinQuantity		bigint not null, 
- 	WalletCoinWalletID		bigint not null, --FK
-);
-
-create table ProfileAccounts(
+CREATE TABLE ProfileAccounts(
 	ProfileID			bigint primary key identity,
 	ProfileName			varchar(255) not null,
 	ProfileLastName		varchar(255) not null,
-	PofileNumberPhone	varchar(15),
-	ProfileAccountID	bigint --FK
+	ProfileNumberPhone	varchar(15) unique,
+	ProfileAccountID	bigint unique,
+	constraint fk_profileaccounts_accounts foreign key (ProfileAccountID) references Accounts(AccountID) on delete cascade
 );
 
-create table Transactions(
+CREATE TABLE Transactions(
 	TransactionID			bigint primary key identity,
 	TransactionAmount		bigint not null,
-	TransactionDate			smalldatetime not null,
-	TransactionReceiver		bigint not null, --FK 
-	TransactionTransmitter	bigint not null  --FK 
+	TransactionDate			time not null,
+	TransactionReceiver		bigint not null,
+	TransactionTransmitter	bigint not null,
+	constraint fk_transactions_accounts1 foreign key (TransactionReceiver) references Accounts(AccountID) ON DELETE CASCADE,
+	--constraint fk_transactions_accounts2 foreign key (TransactionTransmitter) references Accounts(AccountID) ON DELETE CASCADE NO ACTION
 );
 
-create table AuditLogs(
+ALTER TABLE Transactions
+ADD CONSTRAINT fk_transactions_accounts2 
+FOREIGN KEY (TransactionTransmitter) 
+REFERENCES Accounts(AccountID) 
+ON DELETE NO ACTION;
+
+CREATE Table AuditLogs(
 	AuditLogID			bigint primary key identity,
-	AuditLogAccount		bigint not null, -- FK 
-	AuditLogDescription	text not null, --
-	AuditLogTime		smalldatetime, --Fecha
+	AuditLogAccount		bigint unique not null,
+	AuditLogDescription	text not null,
+	AuditLogTime		time,
+	constraint fk_auditlog_accounts foreign key (AuditLogAccount) references Accounts(AccountID) on delete cascade
 );

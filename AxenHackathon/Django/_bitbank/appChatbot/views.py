@@ -5,7 +5,7 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 import json
 
-client = OpenAI(api_key='')
+client = OpenAI(api_key=#Api de Open AI)
 
 # Create your views here.
 def generate_response(question):
@@ -23,7 +23,6 @@ def generate_response(question):
 def answer(request):
     data = json.loads(request.body)
     message = data["message"]
-    #message = "Describe django in 100 words."
     response = StreamingHttpResponse(generate_response(message), status=200, content_type="text/plain") 
     return response
 

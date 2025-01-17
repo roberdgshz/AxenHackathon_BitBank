@@ -17,14 +17,14 @@
 
             <div class="transaction-details">
                 <p><strong>ID:</strong> {{ transaction.id }}</p>
-                <p><strong>Coin:</strong> {{ transaction.coinkey }}</p>
+                <p><strong>Coin:</strong> {{ transaction.coinkey}}</p>
                 <p><strong>Amount:</strong> {{ transaction.amount }}</p>
                 <p><strong>Date:</strong> {{ transaction.date }}</p>
                 <p><strong>Receiver:</strong> {{ transaction.receiver }}</p>
                 <p><strong>Transmitter:</strong> {{ transaction.transmitter }}</p>
             </div>
 
-            <a href="{% url 'transaction_history' request.user.username %}" class="back-link">← Back to Transaction History</a>
+            <a href="{% url 'transaction_history' request.user.accountusername %}" class="back-link">← Back to Transaction History</a>
         </div>
     {% endblock %}
 

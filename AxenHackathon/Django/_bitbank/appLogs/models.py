@@ -14,16 +14,16 @@ class AuditType(models.Model):
 
 class Auditlog(models.Model):
     auditlogid        = models.BigAutoField(primary_key=True)
+    auditlogdescription = models.TextField()
     auditlogaccountid = models.ForeignKey(
         Account,
         on_delete=models.CASCADE
     )
+    auditlogtime        = models.DateTimeField(blank=True, null=True)
     audittypeid = models.ForeignKey(
         AuditType,
         on_delete=models.CASCADE
     )
-    auditlogdescription = models.TextField()
-    auditlogtime        = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         db_table = "auditlog"

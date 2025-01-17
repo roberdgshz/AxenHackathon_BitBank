@@ -1,3 +1,7 @@
+CREATE DATABASE Bitbankdb;
+USE Bitbankdb;
+DROP DATABASE Bitbankdb;
+USE BanksAccountsDB;
 --- Tables
 CREATE TABLE Accounts(
 	AccountID			bigint primary key generated always as identity, 

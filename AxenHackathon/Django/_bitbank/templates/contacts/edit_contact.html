@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Editar Contacto</h2>
+    
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="nickname">Apodo:</label>
+            <input type="text" name="nickname" id="nickname" class="form-control" 
+                   value="{{ contact.nickname|default:'' }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        <a href="{% url 'contacts:contact_list' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

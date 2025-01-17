@@ -29,8 +29,8 @@
 
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
-        <label for="username">Username:</label>
-        <input type="text" name="username" autocomplete="username" required>
+        <label for="username">Email:</label>
+        <input type="text" name="email" autocomplete="email" required>
         <label for="password">Password:</label>
         <input type="password" name="password" required>
         <button type="submit">Login</button>
@@ -48,7 +48,7 @@
         </p>
 
         <p>
-            <!-- agregar la recuperación de contraseñas -->
+            <a href="{% url 'password_reset' %}">Forgot password?</a>
         </p>
     </form>
     {% endblock content %}

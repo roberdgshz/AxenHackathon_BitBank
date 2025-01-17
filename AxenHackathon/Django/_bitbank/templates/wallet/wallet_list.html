@@ -21,7 +21,23 @@
                         <div class="wallet-list">
                             <div class="wallet-item">
                                 <span class="coin-name"> Coin: {{ wallet.coinname }}, Amount: {{ wallet.quantity }}</span>
+                                {% if wallet.coinkey == 'MXN' %}
                                     <span class="coin-amount">Value: {{ wallet.balance }} {{ wallet.coinkey }}</span>
+                                {% elif wallet.coinkey == 'EUR' %}
+                                    <span class="coin-amount">Value: {{ wallet.balance }} {{ wallet.coinkey }}</span>
+                                {% elif wallet.coinkey == 'CAD' %}
+                                    <span class="coin-amount">Value: {{ wallet.balance }} {{ wallet.coinkey }}</span>
+                                {% elif wallet.coinkey == 'CNY' %}
+                                    <span class="coin-amount">Value: {{ wallet.balance }} {{ wallet.coinkey }}</span>
+                                {% elif wallet.coinkey == 'JPY' %}
+                                    <span class="coin-amount">Value: {{ wallet.balance }} {{ wallet.coinkey }}</span>
+                                {% elif wallet.coinkey == 'KRW' %}
+                                    <span class="coin-amount">Value: {{ wallet.balance }} {{ wallet.coinkey }}</span>
+                                {% elif wallet.coinkey == 'RUB' %}
+                                    <span class="coin-amount">Value: {{ wallet.balance }} {{ wallet.coinkey }}</span>
+                                {% else %}
+                                    <span class="coin-amount">Value: {{ wallet.balance }} USD</span>
+                                {% endif %}
                             </div>
                         </div>
                     </a>

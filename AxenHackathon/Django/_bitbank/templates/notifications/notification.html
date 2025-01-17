@@ -24,9 +24,9 @@
                 {% endif %}
                 <p><strong>Description:</strong> {{ log.description }}</p>
                 <p><strong>Registered Time:</strong> {{ log.time }}</p>
+                <button class="transaction-button">Report</button>
             </div>
-
-            <a href="{% url 'notification_list' request.user.username %}" class="back-link">← Back to Notifications</a>
+            <a href="{% url 'notification_list' request.user.accountusername %}" class="back-link">← Back to Notifications</a>
         </div>
     {% endblock %}
 

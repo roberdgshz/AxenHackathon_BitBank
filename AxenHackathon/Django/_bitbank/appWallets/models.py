@@ -5,9 +5,9 @@ from appAccounts.models import Account
 class Coin(models.Model):
     coinid      = models.BigAutoField(primary_key=True)
     coinname    = models.CharField(max_length=100)
-    coinkey     = models.CharField(max_length=5)
+    coinkey     = models.CharField(max_length=5, unique=True)
     coinimgpath = models.ImageField(upload_to='coins/', unique=True, null=True, blank=True)
-    coinvalue   = models.DecimalField(max_digits=100,decimal_places=15)
+    coinvalue   = models.DecimalField(max_digits=100,decimal_places=2)
 
     class Meta:
         db_table = "coin"
@@ -25,8 +25,8 @@ class Wallet(models.Model):
         Coin,
         on_delete=models.CASCADE,
     )
-    walletcoinquantity = models.DecimalField(max_digits=100,decimal_places=20)
-    walletbalance      = models.DecimalField(max_digits=100,decimal_places=20)
+    walletcoinquantity = models.DecimalField(max_digits=100,decimal_places=2)
+    walletbalance      = models.DecimalField(max_digits=100,decimal_places=2)
 
     class Meta:
         db_table = "wallet"

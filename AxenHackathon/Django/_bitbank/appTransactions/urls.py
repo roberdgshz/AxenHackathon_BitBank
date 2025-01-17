@@ -9,4 +9,6 @@ urlpatterns = [
     path('info/<int:id>', ViewTransactionInfo, name="transaction_info"),
     path('receive_generator/', ViewTransactionReceiveGenerator, name="transaction_receive_generator"),
     path('deposit_generator/', ViewTransactionDepositGenerator, name="transaction_deposit_generator"),
+    path('convert/<str:user>', ViewTransactionConvert, name="transaction_convert"),
+    path('convert_generator/', ViewTransactionConvertGenerator, name="transaction_convert_generator"),
 ]

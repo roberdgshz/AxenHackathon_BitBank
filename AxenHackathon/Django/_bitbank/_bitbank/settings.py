@@ -30,7 +30,6 @@ ALLOWED_HOSTS = []
 
 SITE_ID = 1
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,10 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Microservices for project
     'appAccounts',
-    'appChatbot',
     'appLogs',
     'appTransactions',
     'appWallets',
+    'appContacts',
+    'appChatbot',
     # Authentication for project
     # Allauth
     'django.contrib.sites',
@@ -103,7 +103,6 @@ DATABASES = {
     )
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -151,27 +150,54 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Authentications
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',  
+    #'django.contrib.auth.backends.ModelBackend',  
     'allauth.account.auth_backends.AuthenticationBackend',  
 ]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': '',
+            'secret': '',
+          
+        },
+        'SCOPE': ['profile','email',],
+         'AUTH_PARAMS': {'access_type': 'online'},
+        'METHOD': 'oauth2',
+        'VERIFIED_EMAIL': True,
+    },
+    'github': {
+        'APP': {
+            'client_id': '',
+            'secret': '',
+           
+        }
+    }
+   
+}
 
 # URL de redirección después del login
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'
 
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = True
-ACCOUNT_SIGNUP_REDIRECT_URL = LOGIN_REDIRECT_URL
+# Asignar el modelo account como usuario personalizado 
+AUTH_USER_MODEL = 'appAccounts.Account'
+
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'accountusername'
+ACCOUNT_USERNAME_REQUIRED = True 
+ACCOUNT_EMAIL_REQUIRED = True  
+ACCOUNT_AUTHENTICATION_METHOD = "email" 
 ACCOUNT_LOGOUT_ON_GET = True
 
 SOCIALACCOUNT_LOGIN_ON_GET=True
 
 
 #Emails
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'roberd.999117@gmail.com'
+EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
+DEFAULT_FORM_EMAIL = ''
+EMAIL_SUBJECT_PREFIX = ""

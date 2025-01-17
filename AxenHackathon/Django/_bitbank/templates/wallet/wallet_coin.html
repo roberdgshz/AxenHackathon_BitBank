@@ -17,12 +17,13 @@
     
         <div class="coin-details">
             <p><strong>Coin ID:</strong> {{ wallet.coinid }}</p>
-            <p><strong>Coin name:</strong> {{ wallet.coinname }}</p>
+            <p><strong>Coin Name:</strong> {{ wallet.coinname }}</p>
             <p><strong>Amount:</strong> {{ wallet.quantity }}</p>
-            <p><strong>Value:</strong> {{ wallet.balance }} {{ wallet.coinkey }}</p>
+            <p><strong>Balance:</strong> {{ wallet.balance }} USD</p>
+            <a href="{% url 'coin_info' wallet.coinid %}">See coin</a>
         </div>
     
-        <a href="{% url 'wallet_list' request.user.username %}" class="back-link">← Back to Wallet</a>
+        <a href="{% url 'wallet_list' request.user.accountusername %}" class="back-link">← Back to Wallet</a>
     </div>
     {% endblock %}
 </body>

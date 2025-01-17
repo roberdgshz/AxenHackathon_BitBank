@@ -7,80 +7,61 @@ from django.contrib.auth.models import User
 from django.db import connection
 from .models import Account
 
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
+from .form import CustomUserCreationForm
+from django.contrib.auth import login
+from django.contrib.auth import authenticate, logout
+
+from django.db import connection
+
 # Create your views here.
 class ViewCompletation(TemplateView):
     template_name = 'account/completation.html'
 
-def ViewAccount(request, user):
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM account WHERE accountusername = %s",[user])
-        resultados = cursor.fetchall()
-    
-    cuenta = [
-        {"id":fila[0],"username":fila[1],"password":fila[2],"email":fila[3],"nip":fila[4]}
-        for fila in resultados
-    ]
+def ViewAccount(request):
+    if request.user.is_authenticated:
+         current_user = Account.objects.get(accountid=request.user.accountid)
+         form = CustomUserCreationForm(request.POST or None, instance=current_user)
+         if form.is_valid():
+            form.save()
+            login(request, current_user)
+            messages.success(request, ("Your information has been updated"))
+            return redirect('home')
 
-    return render(request, 'account/account.html', {'user':cuenta})
+         return render(request, 'account/account.html', {'form':form})
+    else:
+        messages.success(request, ("You must be logged in"))
+        return redirect('home')
 
 def ViewLoginUser(request):
     if request.method == 'POST':
-        username_or_email = request.POST.get('username')
-        password = request.POST.get('password')
-
-        if not username_or_email or not password:
-            messages.error(request, "Both username/email and password are required.")
-            return redirect('login')
-
-        user = User.objects.filter(email=username_or_email).first()
-        if user:
-            username = user.username  
-        else:
-            username = username_or_email 
-
-        # Autentica al usuario
-        authenticated_user = authenticate(request, username=username, password=password)
-        if authenticated_user is not None:
-            login(request, authenticated_user)
-            messages.success(request, "Login successful!")
+        email = request.POST['email']
+        password = request.POST['password']
+        user = authenticate(request, username=email, password=password)
+        if user is not None:
+            with connection.cursor() as cursor:
+                cursor.execute("SELECT accountid FROM account WHERE email = %s",[email])
+                userid = cursor.fetchone()
+            if userid:
+                with connection.cursor() as cursor:
+                    cursor.execute("SELECT insert_log_login(%s,%s)",[email,userid[0]])
+            else: pass
+            login(request, user)
             return redirect('home')
-        else:
-            messages.error(request, "Invalid email/username or password.")
-            return redirect('login')
-
     return render(request, 'account/login.html')
 
 def ViewRegisterUser(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
-        username = request.POST.get('AccountUsername')
-        nip = request.POST.get('AccountNip')  
-        password1 = request.POST.get('password1')
-        password2 = request.POST.get('password2')
-
-        # Validaciones básicas
-        if password1 != password2:
-            messages.error(request, "Passwords do not match.")
-            return redirect('register')
-
-        if User.objects.filter(username=username).exists():
-            messages.error(request, "Username already taken.")
-            return redirect('register')
-
-        if User.objects.filter(email=email).exists():
-            messages.error(request, "Email already in use.")
-            return redirect('register')
-
-        # Crear usuario
-        with connection.cursor() as cursor:
-            cursor.execute("SELECT insert_user_account('"+username+"','"+password1+"','"+email+"',"+nip+");")
- 
-        #user = authenticate(request, username=username, password=password1)
-        #login(request,user)
-        messages.success(request, "Registration successful!")
-        return redirect('login')
-
-    return render(request, 'account/signup.html')
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'account/signup.html', {'form':form})
 
 def ViewRedirect(request):
     accounts = Account.objects.all()

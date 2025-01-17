@@ -21,13 +21,15 @@
             </div>
 
             <div class="coin-details">
-                {% if coin.id == 4 %}
-                    <p><strong>Current Value:</strong> {{ coin.value }} USD</p>
-                {% else %}
-                    <p><strong>Current Value:</strong> {{ coin.value }} BTC</p>
-                {% endif %}
+                <p><strong>Current Value:</strong> {{ coin.value }} USD</p>
             </div>
         </div>
+
+        {% if plot_div %}
+            <div class="chart-container">
+                {{ plot_div|safe }}
+            </div>
+        {% endif %}
     {% endblock %}
 </body>
 </html>
